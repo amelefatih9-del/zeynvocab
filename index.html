@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vocabulary Quiz</title>
+
+<style>
+body{
+    margin:0;
+    padding:20px;
+    background:#0f172a;
+    color:white;
+    font-family:Arial,sans-serif;
+}
+
+.container{
+    max-width:800px;
+    margin:auto;
+    background:#1e293b;
+    border-radius:20px;
+    padding:25px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:20px;
+    font-size:18px;
+}
+
+.question{
+    font-size:28px;
+    margin-bottom:20px;
+    line-height:1.5;
+}
+
+.choice{
+    width:100%;
+    padding:16px;
+    margin-top:12px;
+    border:none;
+    border-radius:12px;
+    background:#334155;
+    color:white;
+    font-size:18px;
+}
+
+.choice.correct{
+    background:#16a34a;
+}
+
+.choice.wrong{
+    background:#dc2626;
+}
+
+#nextBtn{
+    width:100%;
+    padding:16px;
+    margin-top:20px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:white;
+    font-size:18px;
+    display:none;
+}
+
+.result{
+    margin-top:25px;
+    text-align:center;
+    font-size:24px;
+    line-height:1.8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Vocabulary Quiz</h1>
+
+<div class="top">
+<div id="counter"></div>
+<div id="score">Doğru: 0 | Yanlış: 0</div>
+</div>
+
+<div id="question" class="question"></div>
+
+<div id="choices"></div>
+
+<button id="nextBtn">Sonraki Soru</button>
+
+<div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+var words = [
+
+["analysis","analiz"],
+["analytical","analitik"],
+["analyze","analiz etmek"],
+["approach","yaklaşım"],
+["assign","atamak"],
+["assignment","görev"],
+["assume","varsaymak"],
+["assumption","varsayım"],
+["complex","karışık"],
+["complexity","karmaşıklık"],
+["component","bileşen"],
+["concept","kavram"],
+["conclusion","sonuç"],
+["constant","sabit"],
+["construct","inşa etmek"],
+["consult","danışmak"],
+["consultant","danışman"],
+["contact","iletişim"],
+["context","bağlam"],
+["criterion","ölçüt"],
+["data","veri"],
+["define","tanımlamak"],
+["definition","tanım"],
+["derive","elde etmek"],
+["devise","tasarlamak"],
+["dimension","boyut"],
+["distinct","farklı"],
+["environment","çevre"],
+["equation","eşitlik"],
+["evaluate","değerlendirmek"],
+["evaluation","değerlendirme"],
+["evident","açık"],
+["identify","tespit etmek"],
+["ignore","gözardı etmek"],
+["illustrate","örneklemek"],
+["impact","etki"],
+["imply","ima etmek"],
+["indicate","göstermek"],
+["interpret","yorumlamak"],
+["involve","gerektirmek"],
+["modify","değiştirmek"],
+["obvious","apaçık"],
+["publish","yayınlamak"],
+["random","rastgele"],
+["region","bölge"],
+["require","gerektirmek"],
+["restrict","kısıtlamak"],
+["similar","benzer"],
+["specific","açık"],
+["status","durum"],
+["summary","özet"],
+["ultimate","nihai"],
+["valid","geçerli"],
+["vary","değişmek"],
+["vertical","dikey"]
+
+];
+
+var currentIndex = 0;
+var correctCount = 0;
+var wrongCount = 0;
+var correctAnswer = "";
+
+shuffle(words);
+
+function shuffle(array){
+
+    for(var i=array.length-1;i>0;i--){
+
+        var j=Math.floor(Math.random()*(i+1));
+
+        var temp=array[i];
+        array[i]=array[j];
+        array[j]=temp;
+    }
+}
+
+function loadQuestion(){
+
+    document.getElementById("nextBtn").style.display="none";
+
+    if(currentIndex >= words.length){
+
+        document.getElementById("question").innerHTML =
+        "Quiz Bitti 🎉";
+
+        document.getElementById("choices").innerHTML = "";
+
+        document.getElementById("counter").innerHTML = "";
+
+        document.getElementById("result").innerHTML =
+        "Doğru: " + correctCount +
+        "<br>Yanlış: " + wrongCount +
+        "<br>Başarı: %" +
+        Math.round((correctCount/words.length)*100);
+
+        return;
+    }
+
+    var item = words[currentIndex];
+
+    var askEnglish = Math.random() > 0.5;
+
+    var questionText;
+    var correct;
+
+    if(askEnglish){
+
+        questionText =
+        item[0] + " kelimesinin Türkçesi nedir?";
+
+        correct = item[1];
+
+    }else{
+
+        questionText =
+        item[1] + " kelimesinin İngilizcesi nedir?";
+
+        correct = item[0];
+    }
+
+    correctAnswer = correct;
+
+    document.getElementById("question").innerHTML =
+    questionText;
+
+    document.getElementById("counter").innerHTML =
+    "Soru " + (currentIndex+1) + " / " + words.length;
+
+    var options = [correct];
+
+    while(options.length < 4){
+
+        var randomItem =
+        words[Math.floor(Math.random()*words.length)];
+
+        var value;
+
+        if(askEnglish){
+            value = randomItem[1];
+        }else{
+            value = randomItem[0];
+        }
+
+        if(options.indexOf(value) === -1){
+            options.push(value);
+        }
+    }
+
+    shuffle(options);
+
+    var html = "";
+
+    for(var i=0;i<options.length;i++){
+
+        html +=
+        "<button class='choice' onclick='checkAnswer(this)'>" +
+        options[i] +
+        "</button>";
+    }
+
+    document.getElementById("choices").innerHTML =
+    html;
+}
+
+function checkAnswer(button){
+
+    var buttons =
+    document.getElementsByClassName("choice");
+
+    for(var i=0;i<buttons.length;i++){
+
+        buttons[i].disabled = true;
+
+        if(buttons[i].innerHTML === correctAnswer){
+            buttons[i].className = "choice correct";
+        }
+    }
+
+    if(button.innerHTML === correctAnswer){
+
+        correctCount++;
+
+    }else{
+
+        wrongCount++;
+
+        button.className = "choice wrong";
+    }
+
+    document.getElementById("score").innerHTML =
+    "Doğru: " + correctCount +
+    " | Yanlış: " + wrongCount;
+
+    document.getElementById("nextBtn").style.display =
+    "block";
+}
+
+document.getElementById("nextBtn").onclick = function(){
+
+    currentIndex++;
+
+    loadQuestion();
+};
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
