@@ -3,296 +3,263 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vocabulary Quiz</title>
+<title>Açık Uçlu Vocabulary Quiz</title>
 <style>
-body{background:#0f172a;color:#fff;font-family:Arial;margin:0;padding:20px}
-.container{max-width:850px;margin:auto;background:#1e293b;padding:24px;border-radius:20px}
-.top{display:flex;justify-content:space-between;margin-bottom:20px}
-.question{font-size:28px;line-height:1.5;margin-bottom:20px}
-.choice{display:block;width:100%;padding:16px;margin-top:12px;border:none;border-radius:12px;background:#334155;color:white;font-size:18px}
-.correct{background:#16a34a!important}
-.wrong{background:#dc2626!important}
-#nextBtn{display:none;width:100%;padding:16px;margin-top:20px;border:none;border-radius:12px;background:#2563eb;color:white;font-size:18px}
-.result{font-size:24px;text-align:center;line-height:1.8;margin-top:25px}
+body {
+background:#0f172a;
+color:white;
+font-family:Arial,sans-serif;
+margin:0;
+padding:20px;
+}
+
+.container {
+max-width:800px;
+margin:auto;
+background:#1e293b;
+padding:24px;
+border-radius:20px;
+}
+
+.top {
+display:flex;
+justify-content:space-between;
+margin-bottom:20px;
+}
+
+.question {
+font-size:28px;
+line-height:1.5;
+margin-bottom:20px;
+}
+
+input {
+width:100%;
+padding:16px;
+font-size:18px;
+border:none;
+border-radius:12px;
+background:#334155;
+color:white;
+}
+
+button {
+width:100%;
+padding:16px;
+margin-top:15px;
+font-size:18px;
+border:none;
+border-radius:12px;
+background:#2563eb;
+color:white;
+}
+
+.result {
+margin-top:20px;
+font-size:22px;
+line-height:1.7;
+}
+
+.correct {
+color:#22c55e;
+}
+
+.wrong {
+color:#ef4444;
+}
 </style>
 </head>
 <body>
+
 <div class="container">
-<h1>Vocabulary Quiz</h1>
+
+<h1>Açık Uçlu Vocabulary Quiz</h1>
+
 <div class="top">
 <div id="counter"></div>
 <div id="score">Doğru: 0 | Yanlış: 0</div>
 </div>
+
 <div class="question" id="question"></div>
-<div id="choices"></div>
-<button id="nextBtn">Sonraki Soru</button>
+
+<input type="text" id="answerInput" placeholder="Cevabı yaz..." autocomplete="off">
+
+<button id="checkBtn">Kontrol Et</button>
+
 <div class="result" id="result"></div>
+
 </div>
 
 <script>
+
 var words = [["alter","bir şeyin yapısını değiştirmek"],
 ["analysis","analiz"],
 ["analytical","analitik"],
-["analyze","analiz etmek"],
-["approach","yaklaşım"],
-["approachable","ulaşılması mümkün"],
+["analyze","tahlil etmek, çözümlemek, analiz etmek"],
+["approach","yaklaşım, yaklaşma"],
+["approachable","yaklaşılması/ ulaşılması mümkün"],
 ["arbitrarily","keyfi biçimde"],
 ["arbitrariness","keyfilik"],
-["arbitrary","rastgele"],
-["assign","atamak"],
-["assignment","görev"],
-["assume","varsaymak"],
+["arbitrary","rastgele, keyfi"],
+["assign","atamak, tayin etmek, ayırmak, tahsis etmek"],
+["assignment","atama, görev"],
+["assume","kabul etmek, farzetmek, varsaymak, sanmak, zannetmek"],
 ["assuming that","varsayalım ki"],
 ["assumption","varsayım"],
 ["compensate","tazmin etmek"],
 ["compensation","tazminat"],
-["complex","karışık"],
+["complex","kompleks, karışık"],
 ["complexity","karmaşıklık"],
-["compliance","itaat"],
-["compliant","itaatkar"],
-["comply","uymak"],
-["component","bileşen"],
-["concept","kavram"],
+["compliance","itaat, boyun eğme"],
+["compliant","itaatkar, boyun eğen"],
+["comply","-e uymak, -e riayet etmek"],
+["component","öge, unsur, bileşimin ana parçası, mütemmim cüz"],
+["concept","kavram, mefhum, görüş, fikir"],
 ["conceptual","kavramsal"],
 ["conceptualize","kavramsallaştırmak"],
-["conclude","sonuca varmak"],
+["conclude","sonuca varmak, sonuç çıkarmak"],
 ["conclusion","sonuç"],
-["conclusive","kesin"],
+["conclusive","kesin, net"],
 ["in conclusion","sonuç olarak"],
-["consist in","dayanmak"],
-["consist of","meydana gelmek"],
-["constancy","devamlılık"],
-["constant","sabit"],
-["constantly","sürekli biçimde"],
-["construct","inşa etmek"],
+["consist in","-e bağlı olmak, -e dayanmak"],
+["consist of","-den meydana gelmek, -den ibaret olmak"],
+["constancy","devamlılık, süreklilik"],
+["constant","sabit, değişmez, sürekli, devamlı"],
+["constantly","sık sık, sürekli biçimde"],
+["construct","yapmak, inşa etmek, kurmak"],
 ["construction","yapım"],
 ["constructor","yapımcı"],
-["consult","danışmak"],
+["consult","danışmak, başvurmak"],
 ["consultancy","danışmanlık işi"],
 ["consultant","danışman"],
-["consultation","danışma"],
+["consultation","danışma, konuşma"],
 ["consultative","danışma ile ilgili"],
-["contact","iletişim"],
-["context","bağlam"],
-["criterion","ölçüt"],
-["data","veri"],
+["contact","iletişim, temas, ilişki, bağlantı"],
+["context","bağlam, kontekst"],
+["criterion","kriter, ölçüt"],
+["data","bilgi, veri, data"],
 ["definable","tanımlanabilir"],
-["define","tanımlamak"],
+["define","tanımlamak, tarif etmek"],
 ["definition","tanım"],
-["definite","kesin"],
-["definitely","kesin biçimde"],
-["denote","göstermek"],
-["derive","elde etmek"],
-["devise","tasarlamak"],
-["dimension","boyut"],
-["dimensional","boyutlu"],
-["distinct","farklı"],
-["distinctive","ayırt edici"],
-["distinctiveness","farklılık"],
-["distinction","fark"],
-["diminish","azalmak"],
-["diminution","azalma"],
-["environment","çevre"],
-["environmental","çevresel"],
-["equate","eşitlemek"],
-["equation","eşitlik"],
-["equivalent","eşdeğer"],
-["establish","kurmak"],
-["evaluate","değerlendirmek"],
-["evaluation","değerlendirme"],
-["evaluative","değerlendirmeye dayalı"],
-["evident","açık"],
-["evidently","açık biçimde"],
-["formulate","formüle etmek"],
-["identify","tespit etmek"],
-["identify with","özdeşleştirmek"],
-["identifiable","fark edilebilir"],
-["identification","kimlik"],
-["ignore","gözardı etmek"],
-["illustrate","örneklemek"],
-["illustration","resim"],
-["illustrative","örnekleme"],
-["illustrator","çizer"],
-["impact","etki"],
-["imply","ima etmek"],
-["implied","ima edilmiş"],
-["implication","ima"],
-["implicit","ima edilen"],
-["indicate","göstermek"],
-["indication","işaret"],
-["indicative","belirten"],
-["indicator","gösterge"],
-["initial","ilk"],
-["initially","başlangıçta"],
-["interpret","yorumlamak"],
-["interpretation","yorum"],
-["interpretative","yoruma dayalı"],
-["interpreter","yorumcu"],
-["involve","gerektirmek"],
-["be involved in","kendini vermek"],
-["involvement","katılım"],
-["magnitude","büyüklük"],
-["modify","değiştirmek"],
-["modification","değişiklik"],
-["obvious","apaçık"],
-["obviously","besbelli"],
-["presume","varsaymak"],
-["presumably","herhalde"],
-["presumption","varsayım"],
-["prime","esas"],
-["proceed","devam etmek"],
-["publish","yayınlamak"],
-["publisher","yayıncı"],
-["publishing","yayıncılık"],
-["pursue","takip etmek"],
-["pursuer","takipçi"],
-["pursuit","takip"],
-["random","rastgele"],
-["at random","gelişigüzel"],
-["randomly","rastgele biçimde"],
-["range","aralık"],
-["region","bölge"],
-["regional","bölgesel"],
-["require","gerektirmek"],
-["requirement","gereksinim"],
-["restrict","kısıtlamak"],
-["restricted","kısıtlı"],
-["restriction","kısıtlama"],
-["restrictive","kısıtlayıcı"],
-["reverse","ters çevirmek"],
-["reversible","ters çevrilebilir"],
-["similar","benzer"],
-["similarity","benzerlik"],
-["similarly","benzer şekilde"],
-["specify","belirtmek"],
-["specific","açık"],
-["specifically","açıkça"],
-["status","durum"],
-["subsequent","sonraki"],
-["subsequently","ardından"],
-["suffice","yeterli olmak"],
-["sum","toplam"],
-["summary","özet"],
-["tense","gergin"],
-["tensed up","çok gerilmiş"],
-["tension","gerginlik"],
-["ultimate","nihai"],
-["ultimately","son olarak"],
-["valid","geçerli"],
-["validate","geçerli hale getirmek"],
-["validity","geçerlilik"],
-["vary","değişmek"],
-["varied","çeşitli"],
-["variable","değişken"],
-["vertical","dikey"],
-["vertically","dikey olarak"]];
+["definite","kesin, belirli, belli"],
+["definitely","kesin biçimde"]];
 
 var current = 0;
 var correctCount = 0;
 var wrongCount = 0;
-var currentCorrect = "";
+var currentAnswer = "";
 
 shuffle(words);
 
-function shuffle(array){
-for(var i=array.length-1;i>0;i--){
+function shuffle(array) {
+
+for(var i=array.length-1;i>0;i--) {
+
 var j=Math.floor(Math.random()*(i+1));
+
 var temp=array[i];
 array[i]=array[j];
 array[j]=temp;
+
 }
 }
 
-function loadQuestion(){
+function loadQuestion() {
 
-document.getElementById("nextBtn").style.display="none";
+if(current >= words.length) {
 
-if(current >= words.length){
-document.getElementById("question").innerHTML="Quiz Bitti 🎉";
-document.getElementById("choices").innerHTML="";
-document.getElementById("counter").innerHTML="";
-document.getElementById("result").innerHTML=
-"Doğru: "+correctCount+"<br>Yanlış: "+wrongCount+
-"<br>Başarı: %"+Math.round((correctCount/words.length)*100);
+document.getElementById("question").innerHTML =
+"Quiz Bitti 🎉";
+
+document.getElementById("answerInput").style.display = "none";
+document.getElementById("checkBtn").style.display = "none";
+
+document.getElementById("result").innerHTML =
+"Doğru: " + correctCount +
+"<br>Yanlış: " + wrongCount +
+"<br>Başarı: %" +
+Math.round((correctCount/words.length)*100);
+
 return;
 }
 
 var item = words[current];
+
 var askTR = Math.random() > 0.5;
 
-var questionText = "";
-var correct = "";
+var q = "";
+var answer = "";
 
-if(askTR){
-questionText = item[0] + " kelimesinin Türkçesi nedir?";
-correct = item[1];
+if(askTR) {
+
+q = item[0] + " kelimesinin Türkçesi nedir?";
+answer = item[1];
+
 } else {
-questionText = item[1] + " kelimesinin İngilizcesi nedir?";
-correct = item[0];
+
+q = item[1] + " ifadesinin İngilizcesi nedir?";
+answer = item[0];
 }
 
-currentCorrect = correct;
+currentAnswer = answer.toLowerCase();
 
-document.getElementById("question").innerHTML = questionText;
+document.getElementById("question").innerHTML = q;
+
 document.getElementById("counter").innerHTML =
 "Soru " + (current+1) + " / " + words.length;
 
-var options = [correct];
+document.getElementById("answerInput").value = "";
 
-while(options.length < 4){
-var rand = words[Math.floor(Math.random()*words.length)];
-var value = askTR ? rand[1] : rand[0];
-
-if(options.indexOf(value) === -1){
-options.push(value);
-}
+document.getElementById("result").innerHTML = "";
 }
 
-shuffle(options);
+document.getElementById("checkBtn").onclick = function() {
 
-var html = "";
+var user =
+document.getElementById("answerInput").value
+.toLowerCase()
+.trim();
 
-for(var i=0;i<options.length;i++){
+if(user === currentAnswer) {
 
-html += "<button class='choice' onclick='checkAnswer(this)'>" +
-options[i] + "</button>";
-}
-
-document.getElementById("choices").innerHTML = html;
-}
-
-function checkAnswer(btn){
-
-var buttons = document.getElementsByClassName("choice");
-
-for(var i=0;i<buttons.length;i++){
-
-buttons[i].disabled = true;
-
-if(buttons[i].innerHTML === currentCorrect){
-buttons[i].className = "choice correct";
-}
-}
-
-if(btn.innerHTML === currentCorrect){
 correctCount++;
+
+document.getElementById("result").innerHTML =
+"<span class='correct'>Doğru ✅</span>";
+
 } else {
+
 wrongCount++;
-btn.className = "choice wrong";
+
+document.getElementById("result").innerHTML =
+"<span class='wrong'>Yanlış ❌</span><br><br>" +
+"Doğru cevap:<br>" + currentAnswer;
 }
 
 document.getElementById("score").innerHTML =
-"Doğru: " + correctCount + " | Yanlış: " + wrongCount;
+"Doğru: " + correctCount +
+" | Yanlış: " + wrongCount;
 
-document.getElementById("nextBtn").style.display="block";
-}
-
-document.getElementById("nextBtn").onclick = function(){
 current++;
+
+setTimeout(function() {
 loadQuestion();
+}, 1800);
+
 };
 
+document.getElementById("answerInput")
+.addEventListener("keypress", function(e) {
+
+if(e.key === "Enter") {
+document.getElementById("checkBtn").click();
+}
+
+});
+
 loadQuestion();
+
 </script>
+
 </body>
 </html>
