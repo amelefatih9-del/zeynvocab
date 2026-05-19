@@ -4,315 +4,295 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vocabulary Quiz</title>
-
 <style>
-body{
-    margin:0;
-    padding:20px;
-    background:#0f172a;
-    color:white;
-    font-family:Arial,sans-serif;
-}
-
-.container{
-    max-width:800px;
-    margin:auto;
-    background:#1e293b;
-    border-radius:20px;
-    padding:25px;
-}
-
-h1{
-    text-align:center;
-    margin-bottom:20px;
-}
-
-.top{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:20px;
-    font-size:18px;
-}
-
-.question{
-    font-size:28px;
-    margin-bottom:20px;
-    line-height:1.5;
-}
-
-.choice{
-    width:100%;
-    padding:16px;
-    margin-top:12px;
-    border:none;
-    border-radius:12px;
-    background:#334155;
-    color:white;
-    font-size:18px;
-}
-
-.choice.correct{
-    background:#16a34a;
-}
-
-.choice.wrong{
-    background:#dc2626;
-}
-
-#nextBtn{
-    width:100%;
-    padding:16px;
-    margin-top:20px;
-    border:none;
-    border-radius:12px;
-    background:#2563eb;
-    color:white;
-    font-size:18px;
-    display:none;
-}
-
-.result{
-    margin-top:25px;
-    text-align:center;
-    font-size:24px;
-    line-height:1.8;
-}
+body{background:#0f172a;color:#fff;font-family:Arial;margin:0;padding:20px}
+.container{max-width:850px;margin:auto;background:#1e293b;padding:24px;border-radius:20px}
+.top{display:flex;justify-content:space-between;margin-bottom:20px}
+.question{font-size:28px;line-height:1.5;margin-bottom:20px}
+.choice{display:block;width:100%;padding:16px;margin-top:12px;border:none;border-radius:12px;background:#334155;color:white;font-size:18px}
+.correct{background:#16a34a!important}
+.wrong{background:#dc2626!important}
+#nextBtn{display:none;width:100%;padding:16px;margin-top:20px;border:none;border-radius:12px;background:#2563eb;color:white;font-size:18px}
+.result{font-size:24px;text-align:center;line-height:1.8;margin-top:25px}
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
 <h1>Vocabulary Quiz</h1>
-
 <div class="top">
 <div id="counter"></div>
 <div id="score">Doğru: 0 | Yanlış: 0</div>
 </div>
-
-<div id="question" class="question"></div>
-
+<div class="question" id="question"></div>
 <div id="choices"></div>
-
 <button id="nextBtn">Sonraki Soru</button>
-
-<div id="result" class="result"></div>
-
+<div class="result" id="result"></div>
 </div>
 
 <script>
-
-var words = [
-
+var words = [["alter","bir şeyin yapısını değiştirmek"],
 ["analysis","analiz"],
 ["analytical","analitik"],
 ["analyze","analiz etmek"],
 ["approach","yaklaşım"],
+["approachable","ulaşılması mümkün"],
+["arbitrarily","keyfi biçimde"],
+["arbitrariness","keyfilik"],
+["arbitrary","rastgele"],
 ["assign","atamak"],
 ["assignment","görev"],
 ["assume","varsaymak"],
+["assuming that","varsayalım ki"],
 ["assumption","varsayım"],
+["compensate","tazmin etmek"],
+["compensation","tazminat"],
 ["complex","karışık"],
 ["complexity","karmaşıklık"],
+["compliance","itaat"],
+["compliant","itaatkar"],
+["comply","uymak"],
 ["component","bileşen"],
 ["concept","kavram"],
+["conceptual","kavramsal"],
+["conceptualize","kavramsallaştırmak"],
+["conclude","sonuca varmak"],
 ["conclusion","sonuç"],
+["conclusive","kesin"],
+["in conclusion","sonuç olarak"],
+["consist in","dayanmak"],
+["consist of","meydana gelmek"],
+["constancy","devamlılık"],
 ["constant","sabit"],
+["constantly","sürekli biçimde"],
 ["construct","inşa etmek"],
+["construction","yapım"],
+["constructor","yapımcı"],
 ["consult","danışmak"],
+["consultancy","danışmanlık işi"],
 ["consultant","danışman"],
+["consultation","danışma"],
+["consultative","danışma ile ilgili"],
 ["contact","iletişim"],
 ["context","bağlam"],
 ["criterion","ölçüt"],
 ["data","veri"],
+["definable","tanımlanabilir"],
 ["define","tanımlamak"],
 ["definition","tanım"],
+["definite","kesin"],
+["definitely","kesin biçimde"],
+["denote","göstermek"],
 ["derive","elde etmek"],
 ["devise","tasarlamak"],
 ["dimension","boyut"],
+["dimensional","boyutlu"],
 ["distinct","farklı"],
+["distinctive","ayırt edici"],
+["distinctiveness","farklılık"],
+["distinction","fark"],
+["diminish","azalmak"],
+["diminution","azalma"],
 ["environment","çevre"],
+["environmental","çevresel"],
+["equate","eşitlemek"],
 ["equation","eşitlik"],
+["equivalent","eşdeğer"],
+["establish","kurmak"],
 ["evaluate","değerlendirmek"],
 ["evaluation","değerlendirme"],
+["evaluative","değerlendirmeye dayalı"],
 ["evident","açık"],
+["evidently","açık biçimde"],
+["formulate","formüle etmek"],
 ["identify","tespit etmek"],
+["identify with","özdeşleştirmek"],
+["identifiable","fark edilebilir"],
+["identification","kimlik"],
 ["ignore","gözardı etmek"],
 ["illustrate","örneklemek"],
+["illustration","resim"],
+["illustrative","örnekleme"],
+["illustrator","çizer"],
 ["impact","etki"],
 ["imply","ima etmek"],
+["implied","ima edilmiş"],
+["implication","ima"],
+["implicit","ima edilen"],
 ["indicate","göstermek"],
+["indication","işaret"],
+["indicative","belirten"],
+["indicator","gösterge"],
+["initial","ilk"],
+["initially","başlangıçta"],
 ["interpret","yorumlamak"],
+["interpretation","yorum"],
+["interpretative","yoruma dayalı"],
+["interpreter","yorumcu"],
 ["involve","gerektirmek"],
+["be involved in","kendini vermek"],
+["involvement","katılım"],
+["magnitude","büyüklük"],
 ["modify","değiştirmek"],
+["modification","değişiklik"],
 ["obvious","apaçık"],
+["obviously","besbelli"],
+["presume","varsaymak"],
+["presumably","herhalde"],
+["presumption","varsayım"],
+["prime","esas"],
+["proceed","devam etmek"],
 ["publish","yayınlamak"],
+["publisher","yayıncı"],
+["publishing","yayıncılık"],
+["pursue","takip etmek"],
+["pursuer","takipçi"],
+["pursuit","takip"],
 ["random","rastgele"],
+["at random","gelişigüzel"],
+["randomly","rastgele biçimde"],
+["range","aralık"],
 ["region","bölge"],
+["regional","bölgesel"],
 ["require","gerektirmek"],
+["requirement","gereksinim"],
 ["restrict","kısıtlamak"],
+["restricted","kısıtlı"],
+["restriction","kısıtlama"],
+["restrictive","kısıtlayıcı"],
+["reverse","ters çevirmek"],
+["reversible","ters çevrilebilir"],
 ["similar","benzer"],
+["similarity","benzerlik"],
+["similarly","benzer şekilde"],
+["specify","belirtmek"],
 ["specific","açık"],
+["specifically","açıkça"],
 ["status","durum"],
+["subsequent","sonraki"],
+["subsequently","ardından"],
+["suffice","yeterli olmak"],
+["sum","toplam"],
 ["summary","özet"],
+["tense","gergin"],
+["tensed up","çok gerilmiş"],
+["tension","gerginlik"],
 ["ultimate","nihai"],
+["ultimately","son olarak"],
 ["valid","geçerli"],
+["validate","geçerli hale getirmek"],
+["validity","geçerlilik"],
 ["vary","değişmek"],
-["vertical","dikey"]
+["varied","çeşitli"],
+["variable","değişken"],
+["vertical","dikey"],
+["vertically","dikey olarak"]];
 
-];
-
-var currentIndex = 0;
+var current = 0;
 var correctCount = 0;
 var wrongCount = 0;
-var correctAnswer = "";
+var currentCorrect = "";
 
 shuffle(words);
 
 function shuffle(array){
-
-    for(var i=array.length-1;i>0;i--){
-
-        var j=Math.floor(Math.random()*(i+1));
-
-        var temp=array[i];
-        array[i]=array[j];
-        array[j]=temp;
-    }
+for(var i=array.length-1;i>0;i--){
+var j=Math.floor(Math.random()*(i+1));
+var temp=array[i];
+array[i]=array[j];
+array[j]=temp;
+}
 }
 
 function loadQuestion(){
 
-    document.getElementById("nextBtn").style.display="none";
+document.getElementById("nextBtn").style.display="none";
 
-    if(currentIndex >= words.length){
-
-        document.getElementById("question").innerHTML =
-        "Quiz Bitti 🎉";
-
-        document.getElementById("choices").innerHTML = "";
-
-        document.getElementById("counter").innerHTML = "";
-
-        document.getElementById("result").innerHTML =
-        "Doğru: " + correctCount +
-        "<br>Yanlış: " + wrongCount +
-        "<br>Başarı: %" +
-        Math.round((correctCount/words.length)*100);
-
-        return;
-    }
-
-    var item = words[currentIndex];
-
-    var askEnglish = Math.random() > 0.5;
-
-    var questionText;
-    var correct;
-
-    if(askEnglish){
-
-        questionText =
-        item[0] + " kelimesinin Türkçesi nedir?";
-
-        correct = item[1];
-
-    }else{
-
-        questionText =
-        item[1] + " kelimesinin İngilizcesi nedir?";
-
-        correct = item[0];
-    }
-
-    correctAnswer = correct;
-
-    document.getElementById("question").innerHTML =
-    questionText;
-
-    document.getElementById("counter").innerHTML =
-    "Soru " + (currentIndex+1) + " / " + words.length;
-
-    var options = [correct];
-
-    while(options.length < 4){
-
-        var randomItem =
-        words[Math.floor(Math.random()*words.length)];
-
-        var value;
-
-        if(askEnglish){
-            value = randomItem[1];
-        }else{
-            value = randomItem[0];
-        }
-
-        if(options.indexOf(value) === -1){
-            options.push(value);
-        }
-    }
-
-    shuffle(options);
-
-    var html = "";
-
-    for(var i=0;i<options.length;i++){
-
-        html +=
-        "<button class='choice' onclick='checkAnswer(this)'>" +
-        options[i] +
-        "</button>";
-    }
-
-    document.getElementById("choices").innerHTML =
-    html;
+if(current >= words.length){
+document.getElementById("question").innerHTML="Quiz Bitti 🎉";
+document.getElementById("choices").innerHTML="";
+document.getElementById("counter").innerHTML="";
+document.getElementById("result").innerHTML=
+"Doğru: "+correctCount+"<br>Yanlış: "+wrongCount+
+"<br>Başarı: %"+Math.round((correctCount/words.length)*100);
+return;
 }
 
-function checkAnswer(button){
+var item = words[current];
+var askTR = Math.random() > 0.5;
 
-    var buttons =
-    document.getElementsByClassName("choice");
+var questionText = "";
+var correct = "";
 
-    for(var i=0;i<buttons.length;i++){
+if(askTR){
+questionText = item[0] + " kelimesinin Türkçesi nedir?";
+correct = item[1];
+} else {
+questionText = item[1] + " kelimesinin İngilizcesi nedir?";
+correct = item[0];
+}
 
-        buttons[i].disabled = true;
+currentCorrect = correct;
 
-        if(buttons[i].innerHTML === correctAnswer){
-            buttons[i].className = "choice correct";
-        }
-    }
+document.getElementById("question").innerHTML = questionText;
+document.getElementById("counter").innerHTML =
+"Soru " + (current+1) + " / " + words.length;
 
-    if(button.innerHTML === correctAnswer){
+var options = [correct];
 
-        correctCount++;
+while(options.length < 4){
+var rand = words[Math.floor(Math.random()*words.length)];
+var value = askTR ? rand[1] : rand[0];
 
-    }else{
+if(options.indexOf(value) === -1){
+options.push(value);
+}
+}
 
-        wrongCount++;
+shuffle(options);
 
-        button.className = "choice wrong";
-    }
+var html = "";
 
-    document.getElementById("score").innerHTML =
-    "Doğru: " + correctCount +
-    " | Yanlış: " + wrongCount;
+for(var i=0;i<options.length;i++){
 
-    document.getElementById("nextBtn").style.display =
-    "block";
+html += "<button class='choice' onclick='checkAnswer(this)'>" +
+options[i] + "</button>";
+}
+
+document.getElementById("choices").innerHTML = html;
+}
+
+function checkAnswer(btn){
+
+var buttons = document.getElementsByClassName("choice");
+
+for(var i=0;i<buttons.length;i++){
+
+buttons[i].disabled = true;
+
+if(buttons[i].innerHTML === currentCorrect){
+buttons[i].className = "choice correct";
+}
+}
+
+if(btn.innerHTML === currentCorrect){
+correctCount++;
+} else {
+wrongCount++;
+btn.className = "choice wrong";
+}
+
+document.getElementById("score").innerHTML =
+"Doğru: " + correctCount + " | Yanlış: " + wrongCount;
+
+document.getElementById("nextBtn").style.display="block";
 }
 
 document.getElementById("nextBtn").onclick = function(){
-
-    currentIndex++;
-
-    loadQuestion();
+current++;
+loadQuestion();
 };
 
 loadQuestion();
-
 </script>
-
 </body>
 </html>
