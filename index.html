@@ -325,8 +325,7 @@
         <div id="menu-screen" class="menu-box">
             <button class="menu-btn" onclick="initGame(1)">📘 Chapter 1 Çöz</button>
             <button class="menu-btn" onclick="initGame(2)">📙 Chapter 2 Çöz</button>
-            <button class="menu-btn" onclick="initGame(3)">📗 Chapter 3 Çöz</button>
-            <button class="menu-btn mixed" onclick="initGame(4)">🎲 Karışık Çöz (1, 2 & 3)</button>
+            <button class="menu-btn mixed" onclick="initGame(3)">🎲 Karışık Çöz (1 & 2)</button>
         </div>
 
         <div id="quiz-screen" style="display: none;">
@@ -346,4 +345,624 @@
 
             <div class="action-footer">
                 <div class="keyboard-tip">
-                    <span class="key-badge
+                    <span class="key-badge">1</span>-<span class="key-badge">4</span> Seç | <span class="key-badge">Enter</span> Geç
+                </div>
+                <button id="next-btn" class="next-btn" onclick="triggerNext()">Sonraki Soru ➔</button>
+            </div>
+        </div>
+
+        <div id="result-screen" class="result-box" style="display: none;">
+            <div class="result-icon" id="result-icon">🏆</div>
+            <div class="result-title" id="result-title">Test Tamamlandı!</div>
+            <div class="score-display" id="result-score">0 / 0</div>
+            <div id="result-percentage-text" style="font-size: 0.95rem; color: var(--text-muted);">Başarı Oranı: %0</div>
+            
+            <div class="percentage-bar-container">
+                <div class="percentage-bar-fill" id="percentage-fill"></div>
+            </div>
+
+            <div class="stats-summary">
+                <div class="summary-card">
+                    <div class="summary-label">Doğru</div>
+                    <div class="summary-value" id="sum-correct" style="color: var(--success);">0</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Yanlış</div>
+                    <div class="summary-value" id="sum-wrong" style="color: var(--danger);">0</div>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="action-btn btn-retry-wrong" id="btn-retry-wrong" onclick="startQuiz('wrong')" disabled>🎯 Sadece Yanlışları Tekrar Çöz</button>
+                <button class="action-btn btn-menu" onclick="showMenu()">🏠 Ana Menüye Dön</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-panel" id="info-panel">
+        <div class="info-title">💡 Nasıl Kullanılır?</div>
+        <ul>
+            <li>Yukarıdaki menüden çözmek istediğiniz bölümü veya karışık modu seçin.</li>
+            <li>Sorular Türkçe ➔ İngilizce veya tam tersi yönlerde rastgele sorulur.</li>
+            <li>Şıkları tıklayarak veya klavyeden <span class="key-badge">1</span>, <span class="key-badge">2</span>, <span class="key-badge">3</span>, <span class="key-badge">4</span> tuşlarıyla seçebilirsiniz.</li>
+            <li>Sonraki soruya geçmek için <span class="key-badge">Enter</span> tuşunu kullanın.</li>
+        </ul>
+    </div>
+
+    <script>
+        // CHAPTER 1 KELİMELERİ
+        const rawCh1 = `
+alter (v) / bir şeyin yapısını değiştirmek
+analysis/ analyses (n) / analiz
+analytical (adj) / analitik
+analyze (v) / tahlil etmek, çözümlemek, analiz etmek
+approach (n) / iletişim, yakınlık
+approach (n) / yaklaşım, yaklaşma
+approach (v) / yaklaşmak, yanaşmak
+approachable (adj) / yaklaşılması/ ulaşılması mümkün
+arbitrarily (adv) / keyfi biçimde
+arbitrariness (n) / keyfilik
+arbitrary (adj) / rastgele, keyfi
+assign (v) / atamak, tayin etmek, ayırmak, tahsis etmek
+assignment (n) / atama, görev
+assume (v) / kabul etmek, farzetmek, varsaymak, sanmak, zannetmek
+assuming that (conj) / varsayalım ki
+assumption (n) / varsayım
+compensate (v) / tazmin etmek
+compensate (v) / tazmin etmek, tazminat ödemek, para ödemesi yaparak tazmin etmek
+compensation (n) / tazminat
+complex (adj) / anlaşılması zor
+complex (adj) / kompleks, karışık
+complex (n) / grup, bağlantılı binalardan oluşan ana bina
+complex (n) / psikolojik komplex
+complexity (n) / karmaşıklık
+compliance (n) / itaat, boyun eğme
+compliant (adj) / itaatkar, boyun eğen
+comply (v) / -e uymak, -e riayet etmek
+component (n) / öge, unsur, bileşimin ana parçası, mütemmim cüz
+concept (n) / kavram, mefhum, görüş, fikir
+conceptual (adj) / kavramsal
+conceptualize (v) / kavramsallaştırmak
+conclude (v) / bitirmek, sona erdirmek
+conclude (v) / sonuca varmak, sonuç çıkarmak
+conclusion (n) / sonuç
+conclusive (adj) / kesin, net
+in conclusion (adv phr) / sonuç olarak
+consist in (v) / -e bağlı olmak, -e dayanmak
+consist of (v) / -den meydana gelmek, -den ibaret olmak
+constancy (n) / devamlılık, süreklilik
+constant (adj) / sabit, değişmez, sürekli, devamlı
+constantly (adv) / sık sık, sürekli biçimde
+construct (n) / bir fikir veya hayali durum
+construct (v) / yapmak, inşa etmek, kurmak, çizmek (geometri)
+construction (n) / yapım
+constructor (n) / yapımcı
+consult (v) / danışmak, başvurmak
+consultancy (n) / danışmanlık işi
+consultant (n) / danışman
+consultation (v) / danışma, konuşma
+consultative (adj) / danışma ile ilgili
+contact (n) / iletişim, temas, ilişki, bağlantı, temas kurmak, dokunmak
+contact (n) / temas, dokunma
+contact (v) / iletişim kurmak, bağlantı kurmak
+context (n) / bağlam, kontekst
+criterion/ criteria (n) / kriter, ölçüt
+data/ datum (n) / bilgi, veri, data
+definable (adj) / tanımlanabilir
+define (v) / tanımlamak, tarif etmek
+definition (n) / tanım
+definite (adj) / kesin, belirli, belli
+definitely (adv) / kesin biçimde
+denote (v) / temsil etmek, göstermek, belirtmek
+derive (v) / -den türemek, -den elde etmek, -den sağlamak
+devise (v) / tasarlamak, planlamak, düzenlemek
+dimension (n) / boyut, ebat
+dimensional (adj) / boyutlu
+distinct (adj) / ayrı, farklı
+distinctive (adj) / ayırıcı, belirgin
+distinctiveness (n) / farklılık
+distinction (n) / ayırım, fark
+diminish (v) / azalmak
+diminution (n) / azalma
+environment (n)  / çevre, muhit, ortam
+environmental (adj) / çevre ile ilgili
+equate (v) / ile eşitlemek, ile eşit saymak
+equation (n) / denklik, eşitlik
+equivalent (of) (adj) / -nın eşdeğeri
+establish (v) / kurmak, tespit etmek, saptamak
+establish (v) / göstermek, kendisini kurmak
+establish (v) / güçlendirmek, kuvvetlendirmek
+evaluate (v) / değerlendirmek
+evaluation (n) / değerlendirme
+evaluative (adj) / değerlendirmeye dayalı
+evident (adj) / açık, belli
+evidently (adv) / açık biçimde
+formulate (v) / kesin ve açık olarak belirtmek
+identify (v) / tespit etmek, saptamak, tanımak
+identify with (phr v) / özdeşleştirmek
+identifiable (adj) / fark edilebilir
+identification (n) / kimlik
+ignore (v) / boşvermek, gözardı etmek, önemsememek
+illustrate (v) / göstermek, örneklemek, resimlemek
+illustration (n) / tasvir, resim
+illustrative (adj)  / örnekleme
+illustrator (n) / resimleyen kişi
+impact (on) (n) / etki, vuruş, darbe
+impact (on) (v) / etkilemek
+imply (v)  / ima etmek, işaret etmek
+implied (adj) / ima edilmiş
+implication (n) / ima, saklı olan anlam, işaret
+implicit (adj) / ifade edilmeden anlaşılan, ima edilen
+indicate (v) / işaret etmek, göstermek
+indication (n) / işaret, gösterge
+indicative  (adj) / gösteren, belirten 
+indicator (n) / işaret
+initial (adj) / baştaki, ilk, birinci
+initially (adv) / başlangıçta
+interpret (v) / yorumlamak, tercüme etmek
+interpretation (n) / yorum
+interpretative (adj) / yoruma dayalı
+interpreter (n) / yorumcu
+involve (v) / gerektirmek, istemek, yer almak
+be involved in (phr v) / kendini vermek
+involvement (n) / yer alma, katılım, dahil olma
+magnitude (n) / büyüklük, boy, önem
+modify (v) / biraz değiştirmek, ayarlamak
+modification (n) / değiştirme, dönüştürme
+obvious (adj) / apaçık, belli, aşikar
+obviously (adv)  / açık, besbelli
+`;
+
+        // CHAPTER 2 KELİMELERİ (YENİ EKLENENLERLE BİRLİKTE)
+        const rawCh2 = `
+accelerate (v) / hızlandırmak, hızlanmak, ivmek
+acceleration (n) / hızlanma, hız
+accelerator (n) / gaz pedalı
+achive (v) / başarmak, yapmak, elde etmek, kazanmak
+achievable (adj) / ulaşılabilir, elde edilebilir
+achievement (n) / başarı
+adjacent (n) / -e bitişik, bitişikteki, komşu
+affect (v) / etkilemek, tesir etmek
+affecting (adj) / etkileyici
+approximate (adj) / yaklaşık
+approximate (v) / yaklaşmak
+approximately (adv) / yaklaşık olarak
+assert (v) / ileri sürmek, öne sürmek
+assertion (n) / iddia
+assertive (adj) / kendini hissettiren
+authorize (v) / izin vermek, yetkilendirmek
+authorization (n) / izin, yetki
+aware (adj) / farkında, haberdar
+awareness (n) / bilinç
+complicate (v) / zorlaştırmak, güçleştirmek
+complicated (adj) / karmaşık
+complication (n) / güçlük, problem
+comprehend (v) / kavramak, anlamak, kapsamak
+comprehensible (adj) / anlaşılır, anlaşılması mümkün
+comprehension (n) / anlayış, kavrayış
+conceive (v) / algılamak, tasavvur etmek
+conceivable (adj) / algılanabilir, düşünülebilir
+conceive (v) / plan veya bir şey tasarlamak
+conceive (v) / gebe kalmak
+concentrade (v) / odaklaşmak, yoğunlaşmak, toplamak, yığmak, yoğunlaştırmak, koyulaştırmak
+concentrated (adj) / yoğunlaştırılmış
+concentration (n) / yoğunlaşma, konsantrasyon 
+concentrade (v) / koyulaştırmak
+consequent (n) / sonucu olan, sonucunda ortaya çıkan
+contrast (n) / zıtlık, terslik
+contrast (v) / zıtlaştırmak, karşılaştırmak
+contribute (v) / vermek, bağışlamak, katkıda bulunmak
+contributor (n) / katkı sahibi 
+contribution (n) / katkı
+convert (v) / dönmek, dönüşmek, dönüştürmek
+convert (n) / din değiştiren kimse
+conversion (n) / değişim, dönüşüm
+convertible (adj) / dönüşebilir, dönüştürülebilir
+create (v) / yaratmak, oluşturmak
+creation (n) / oluşturma, meydana getirme, yaratılış
+creator (n) / yaratıcı, mucit
+crucial (adj) / çok önemli, can alıcı
+crucially (adj) / son derece
+decade (n) / on yıl
+demonstrate (v) / kanıtlamak, göstermek, gösteri yapmak
+demonstration (n) / gösteri, ispat, kanıtlama
+demonstrater (n) / açıklayıcı, bir şeyin nasıl işlediğini gösteren kimse
+design (v) / tasarım yapmak, planlamak
+design (n) / tasarım, plan
+designer (n) / tasarımcı
+devote (v) / tahsis etmek, -e adamak, vakfetmek
+devoted (adj) / inanmış, sadık
+distort (v) / biçimini bozmak, çarpıtmak
+distorted (adj) / bozulmuş, tahrip edilmiş
+distortion (n) / tahrif, sapıtma
+emphasize (v) / vurgulamak 
+emphasis (n) / vurgu, önem
+emphatic (adj) / ısrarlı, vurgulanarak söylenen
+empirical (adj) / deneysel, ampirik
+empirically (adv) / deneysel olarak
+ensure (v) / kesinleştirmek, sağlamak, temin etmek, garanti etmek
+entity (n) / varlık
+equilibrum (n) / denge, muvazene
+expand (v) / genişlemek, genişletmek, genleşmek
+expansion (n) / genişleme, yayılma
+exponsionism (n) / yayılmacılık
+expose (v) / sergilemek, teşhir etmek
+expose (v) / maruz bırakmak 
+exposure (n) / maruz kalma miktarı
+external (adj) / dış, harici, yüzeysel 
+externalize (v) / dışa vurmak, açığa vurmak
+externally (adv) / dışarıdan göründüğü şekliyle
+feasible (adj) / mümkün, yapılabilir, uygulanabilir
+feasibility (adj) / uygulanabilir
+fluctuate (v) / yükselip alçalmak, değişmek, dalgalanmak
+fluctuation (n) / dalgalanma, değişiklik
+focus (n) / odak, odak noktası
+focus (v) / odaklanmak, odaklaşmak, yoğunlaşmak
+function (n) / amaç, iş, görev, fonksiyon, işlev
+function as (adv) / olarak işlev görmek, görev yapmak
+generate (v) / sebep olmak, üretmek, meydana getirmek
+generation (n) / üretim
+individual (n) / birey, bireysel, kimse, şahıs
+individualism (n) / ferdiyetçilik, bireycilik
+individually (adv) / tek tek, bireysel olarak
+infer (v) / anlamak, sonuç çıkarmak
+inference (n) / sonuç, çıkarım
+inhibit (v) / engellemek, yasaklamak
+innovation (n) / yenilik, değişiklik 
+intense (adj) / şiddetli, keskin, ciddi
+intensly (adj) / şiddetli, yoğun biçimde, ciddi biçimde
+intensify (v) / yoğunlaşmak, yoğunlaştırmak
+intensive (adj) / yoğun
+intutive (adj) / sezgisel, sezgiye dayalı
+intituvely (adj) / sezgisel olarak
+isolate (v) / yalnız bırakmak, izole etmek, tecrit etmek
+isolated (adj) / bağlantısız, ıssız
+major (adj) / büyük, önemli
+manipulate (v) / el ile hareket ettirmek, kendi çıkarları için kullanmak
+manipulation (n) / yönlendirme
+mature (v) / olgunlaşmak
+mature (adj) / olgun, iyi hazırkanmış, vadesi dolmuş
+maturity, maturation (n) / olgunluk, olgunlaşma
+notion (n) / düşünce, fikir, inanç
+notional (adj) / düşünceye dayalı
+obtain (v) / elde etmek, ele geçirmek, sağlamak
+obtainable (adj) / elde edilebilir
+occur (v) / olmak, meydana gelmek, vuku bulmak
+pertinent (adj) / yerinde, uygun, ile ilgili
+prece (v) / -den önde olmak, -den önce gelmek
+preceding (adj) / önceki
+precise (adj) / tam, kesin, hassa
+precisely (adj) / kesin biçimde, net olarak, tam olarak
+react (v) / -e tepki göstermek, cevap vermek
+reaction (n) / reaksiyon, tepki
+respective (n) / kendi
+respectively (adj) / sırayla, önem sırasına göre
+segment (n) / parça, fragman
+segment (v) / ayrılmak, parçalanmak, bölünmek 
+select (v) / seçmek, ayırmak
+select (n) / seçim
+selection (n) / seçim
+selective (adj) / seçici
+sequence (n) / sıra, seri, düzen
+sequential (adj) / sıralı
+shift (v) / değiştirmek, aktarmak
+signify (v) / anlamına gelmek, işaret etmek, belirtmek
+simultaneous (adj) / simultane, eş zamanlı, aynı anda 
+simultaneously (adj) / eş zamanlı olarak, aynı anda
+sophisticated (adj) / çok şey bilen (kimse), ince düşünülmüş, ileri (teknoloji)
+sophisticated (adj) / ileri düzey (teknoloji) 
+species (n) / tür
+stable (adj) / sabit, stabil, istikrarlı
+stabilize (v) / sabitlemek, sabitleşmek
+stabilization (n) / sabit durum, istikrar
+structure (n) / yapı
+structure (v) / yapılandırmak
+structural (adj) / yapısal
+structuralism (n) / yapısalcılık
+structuralist (adj) / yapısalcı
+trace (v) / izlemek, iz sürmek
+trace (n) / iz, işaret
+tradition (n) / gelenek, anane
+traditional (adj) / geleneksel
+traditionalist (n) / gelenekçilik
+traditionalist (adj) / gelenekçi
+transmit (v) / (sinyalleri) yaymak, iletmek, götürmek, geçmek
+transmission (n) / yayılma, bulaşma
+transmitter (n) / yayın donanımı
+undergo (v) / -e uğramak, maruz kalmak. başından geçmek
+verbal (n) / sözlü, sözel, kelimesi kelimesine
+verbally (adv) / sozlü olarak
+verify (v) / doğrulamak, teyit etmek, tasdik etmek
+verifiable (adj) / doğrulanabilir, ispatlanabilir
+`;
+
+        // YENİ AKILLI AYRIŞTIRICI (PARSER)
+        function parseWords(text) {
+            const lines = text.split('\n');
+            const uniqueMap = new Map();
+
+            lines.forEach(line => {
+                // "- [ ] " veya "- " gibi gereksiz liste işaretlerini başından siler
+                let clean = line.replace(/^[\-\[\]\s]+/, '').trim();
+                
+                // Eğer satırda hiç "/" yoksa atla
+                if (!clean || !clean.includes('/')) return;
+
+                // Bölmek için en mantıklı yer " / " işaretidir
+                let splitIndex = clean.indexOf(' / ');
+                if (splitIndex === -1) {
+                    // Bulamazsa sadece "/" olan ilk yeri bul
+                    splitIndex = clean.indexOf('/');
+                }
+
+                if (splitIndex !== -1) {
+                    let en = clean.substring(0, splitIndex).trim();
+                    let tr = clean.substring(splitIndex + 1).trim();
+                    
+                    // Türkçe kısmında başa takılan gereksiz '/' işaretlerini temizle
+                    tr = tr.replace(/^\/\s*/, '');
+                    
+                    if (en && tr) {
+                        uniqueMap.set(en, { en: en, tr: tr });
+                    }
+                }
+            });
+
+            return Array.from(uniqueMap.values());
+        }
+
+        // Veri listeleri
+        const listCh1 = parseWords(rawCh1);
+        const listCh2 = parseWords(rawCh2);
+        const listMixed = [...listCh1, ...listCh2];
+
+        // Global Değişkenler
+        let quizPool = [];         
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let currentQuestion = null; 
+        let wrongAnswersPool = [];  
+        let isAnswered = false;     
+        let globalDistractorPool = []; // Çeldiricileri tüm kelimelerden almak için
+
+        // DOM Elemanları
+        const menuScreen = document.getElementById('menu-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const infoPanel = document.getElementById('info-panel');
+        const modeLabel = document.getElementById('current-mode-label');
+
+        const statProgress = document.getElementById('stat-progress');
+        const statScore = document.getElementById('stat-score');
+        const progressBar = document.getElementById('progress-bar');
+        const questionText = document.getElementById('question-text');
+        const optionsGrid = document.getElementById('options-grid');
+        const nextBtn = document.getElementById('next-btn');
+        const directionBadge = document.getElementById('direction-badge');
+        const btnRetryWrong = document.getElementById('btn-retry-wrong');
+
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function showMenu() {
+            menuScreen.style.display = 'flex';
+            quizScreen.style.display = 'none';
+            resultScreen.style.display = 'none';
+            infoPanel.style.display = 'block';
+            modeLabel.textContent = "Lütfen Bölüm Seçin";
+        }
+
+        // Menü butonuna tıklandığında tetiklenir
+        function initGame(mode) {
+            let selectedList = [];
+            
+            if (mode === 1) {
+                selectedList = listCh1;
+                modeLabel.textContent = "Bölüm: Chapter 1";
+            } else if (mode === 2) {
+                selectedList = listCh2;
+                modeLabel.textContent = "Bölüm: Chapter 2";
+            } else if (mode === 3) {
+                selectedList = listMixed;
+                modeLabel.textContent = "Bölüm: Karışık (1 & 2)";
+            }
+
+            globalDistractorPool = listMixed; // Yanlış şıklar her zaman karışık havuzdan gelsin
+            startQuiz(selectedList);
+        }
+
+        function startQuiz(modeData) {
+            let activeList = [];
+            
+            if (modeData === 'wrong') {
+                activeList = wrongAnswersPool;
+                modeLabel.textContent = "Mod: Yanlışları Tekrar Çöz";
+            } else {
+                activeList = modeData;
+                wrongAnswersPool = []; // Yeni normal oyunda hata havuzunu sıfırla
+            }
+
+            quizPool = shuffleArray(activeList);
+            currentQuestionIndex = 0;
+            score = 0;
+            isAnswered = false;
+
+            menuScreen.style.display = 'none';
+            resultScreen.style.display = 'none';
+            infoPanel.style.display = 'none';
+            quizScreen.style.display = 'block';
+
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            isAnswered = false;
+            nextBtn.style.display = 'none';
+            
+            const totalQuestions = quizPool.length;
+            statProgress.textContent = `${currentQuestionIndex + 1} / ${totalQuestions}`;
+            statScore.textContent = score;
+            
+            const progressPercent = (currentQuestionIndex / totalQuestions) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+
+            const targetWord = quizPool[currentQuestionIndex];
+            const isEnToTr = Math.random() > 0.5;
+
+            let questionString = "";
+            let correctValue = "";
+
+            if (isEnToTr) {
+                directionBadge.textContent = "İngilizce ➔ Türkçe";
+                questionString = targetWord.en;
+                correctValue = targetWord.tr;
+            } else {
+                directionBadge.textContent = "Türkçe ➔ İngilizce";
+                questionString = targetWord.tr;
+                correctValue = targetWord.en;
+            }
+
+            // Çeldiricileri Global Listeden Al
+            const filteredDistractors = globalDistractorPool.filter(w => {
+                return isEnToTr ? w.tr !== correctValue : w.en !== correctValue;
+            });
+
+            const shuffledDistractors = shuffleArray(filteredDistractors);
+            const selectedDistractors = shuffledDistractors.slice(0, 3).map(w => isEnToTr ? w.tr : w.en);
+            const finalOptions = shuffleArray([correctValue, ...selectedDistractors]);
+
+            currentQuestion = {
+                wordObj: targetWord,
+                questionText: questionString,
+                correctAnswer: correctValue,
+                options: finalOptions
+            };
+
+            questionText.textContent = currentQuestion.questionText;
+            optionsGrid.innerHTML = "";
+
+            currentQuestion.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.innerHTML = `<span class="option-key">${index + 1}</span> <span class="option-text-val"></span>`;
+                button.querySelector('.option-text-val').textContent = option;
+                
+                button.addEventListener('click', () => handleSelectAnswer(index));
+                optionsGrid.appendChild(button);
+            });
+        }
+
+        function handleSelectAnswer(selectedIndex) {
+            if (isAnswered) return;
+            isAnswered = true;
+
+            const buttons = optionsGrid.querySelectorAll('.option-btn');
+            const selectedOption = currentQuestion.options[selectedIndex];
+            const correctOptionIndex = currentQuestion.options.indexOf(currentQuestion.correctAnswer);
+
+            if (selectedOption === currentQuestion.correctAnswer) {
+                buttons[selectedIndex].classList.add('correct');
+                score++;
+                statScore.textContent = score;
+            } else {
+                buttons[selectedIndex].classList.add('incorrect');
+                if (correctOptionIndex !== -1) {
+                    buttons[correctOptionIndex].classList.add('correct');
+                }
+                
+                // Yanlış havuza ekle
+                if (!wrongAnswersPool.some(w => w.en === currentQuestion.wordObj.en)) {
+                    wrongAnswersPool.push(currentQuestion.wordObj);
+                }
+            }
+
+            buttons.forEach(btn => btn.disabled = true);
+            nextBtn.style.display = 'inline-flex';
+            
+            if (currentQuestionIndex === quizPool.length - 1) {
+                nextBtn.innerHTML = "Sonuçları Göster 🏁";
+            }
+        }
+
+        function triggerNext() {
+            if (!isAnswered) return;
+
+            if (currentQuestionIndex < quizPool.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quizScreen.style.display = 'none';
+            resultScreen.style.display = 'block';
+            progressBar.style.width = '100%';
+
+            const total = quizPool.length;
+            const correctCount = score;
+            const wrongCount = total - correctCount;
+            const percentage = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+            document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+            document.getElementById('result-percentage-text').textContent = `Başarı Oranı: %${percentage}`;
+            document.getElementById('sum-correct').textContent = correctCount;
+            document.getElementById('sum-wrong').textContent = wrongCount;
+            const fill = document.getElementById('percentage-fill');
+
+            setTimeout(() => {
+                fill.style.width = `${percentage}%`;
+            }, 100);
+
+            const rIcon = document.getElementById('result-icon');
+            const rTitle = document.getElementById('result-title');
+
+            if (percentage >= 85) {
+                rIcon.textContent = "👑";
+                rTitle.textContent = "Mükemmel Başarı!";
+            } else if (percentage >= 50) {
+                rIcon.textContent = "🌟";
+                rTitle.textContent = "Harika İlerleme!";
+            } else {
+                rIcon.textContent = "📚";
+                rTitle.textContent = "Biraz Daha Pratik Yapmalısın";
+            }
+
+            if (wrongAnswersPool.length > 0) {
+                btnRetryWrong.disabled = false;
+                btnRetryWrong.innerHTML = `🎯 Sadece Yanlışları Tekrar Çöz (${wrongAnswersPool.length})`;
+            } else {
+                btnRetryWrong.disabled = true;
+                btnRetryWrong.innerHTML = `🎯 Tekrar Çözülecek Yanlış Yok`;
+            }
+        }
+
+        // Klavye Kısayolları
+        window.addEventListener('keydown', (e) => {
+            if (quizScreen.style.display === 'none') return;
+
+            if (['1', '2', '3', '4'].includes(e.key)) {
+                const index = parseInt(e.key) - 1;
+                const buttons = optionsGrid.querySelectorAll('.option-btn');
+                if (buttons && buttons[index] && !isAnswered) {
+                    handleSelectAnswer(index);
+                }
+            }
+
+            if (e.key === 'Enter') {
+                if (isAnswered) {
+                    triggerNext();
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
