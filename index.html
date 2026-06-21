@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gelişmiş Kelime Quiz (Bölüm Seçmeli)</title>
+    <title>Gelişmiş Kelime Quiz (İngilizce ➔ Türkçe)</title>
     <style>
         :root {
             --bg-main: #0f172a;
@@ -322,12 +322,14 @@
             <div class="subtitle" id="current-mode-label">Lütfen Bölüm Seçin</div>
         </header>
 
+        <!-- MENU EKRANI -->
         <div id="menu-screen" class="menu-box">
             <button class="menu-btn" onclick="initGame(1)">📘 Chapter 1 Çöz</button>
             <button class="menu-btn" onclick="initGame(2)">📙 Chapter 2 Çöz</button>
             <button class="menu-btn mixed" onclick="initGame(3)">🎲 Karışık Çöz (1 & 2)</button>
         </div>
 
+        <!-- QUIZ EKRANI -->
         <div id="quiz-screen" style="display: none;">
             <div class="stats-bar">
                 <div class="stat-item"><span>Soru:</span> <span class="stat-value" id="stat-progress">0/0</span></div>
@@ -351,6 +353,7 @@
             </div>
         </div>
 
+        <!-- SONUÇ EKRANI -->
         <div id="result-screen" class="result-box" style="display: none;">
             <div class="result-icon" id="result-icon">🏆</div>
             <div class="result-title" id="result-title">Test Tamamlandı!</div>
@@ -383,7 +386,7 @@
         <div class="info-title">💡 Nasıl Kullanılır?</div>
         <ul>
             <li>Yukarıdaki menüden çözmek istediğiniz bölümü veya karışık modu seçin.</li>
-            <li>Sorular Türkçe ➔ İngilizce veya tam tersi yönlerde rastgele sorulur.</li>
+            <li><strong>Sorular her zaman İngilizce ➔ Türkçe yönünde sorulur.</strong></li>
             <li>Şıkları tıklayarak veya klavyeden <span class="key-badge">1</span>, <span class="key-badge">2</span>, <span class="key-badge">3</span>, <span class="key-badge">4</span> tuşlarıyla seçebilirsiniz.</li>
             <li>Sonraki soruya geçmek için <span class="key-badge">Enter</span> tuşunu kullanın.</li>
         </ul>
@@ -813,28 +816,19 @@ verifiable (adj) / doğrulanabilir, ispatlanabilir
             progressBar.style.width = `${progressPercent}%`;
 
             const targetWord = quizPool[currentQuestionIndex];
-            const isEnToTr = Math.random() > 0.5;
 
-            let questionString = "";
-            let correctValue = "";
-
-            if (isEnToTr) {
-                directionBadge.textContent = "İngilizce ➔ Türkçe";
-                questionString = targetWord.en;
-                correctValue = targetWord.tr;
-            } else {
-                directionBadge.textContent = "Türkçe ➔ İngilizce";
-                questionString = targetWord.tr;
-                correctValue = targetWord.en;
-            }
+            // SADECE İNGİLİZCE -> TÜRKÇE MODU
+            directionBadge.textContent = "İngilizce ➔ Türkçe";
+            let questionString = targetWord.en;
+            let correctValue = targetWord.tr;
 
             // Çeldiricileri Global Listeden Al
             const filteredDistractors = globalDistractorPool.filter(w => {
-                return isEnToTr ? w.tr !== correctValue : w.en !== correctValue;
+                return w.tr !== correctValue;
             });
 
             const shuffledDistractors = shuffleArray(filteredDistractors);
-            const selectedDistractors = shuffledDistractors.slice(0, 3).map(w => isEnToTr ? w.tr : w.en);
+            const selectedDistractors = shuffledDistractors.slice(0, 3).map(w => w.tr);
             const finalOptions = shuffleArray([correctValue, ...selectedDistractors]);
 
             currentQuestion = {
