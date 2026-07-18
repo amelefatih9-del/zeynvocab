@@ -79,8 +79,8 @@
         .menu-box {
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            padding: 20px 0;
+            gap: 12px;
+            padding: 10px 0;
         }
 
         .menu-btn {
@@ -326,7 +326,8 @@
         <div id="menu-screen" class="menu-box">
             <button class="menu-btn" onclick="initGame(1)">📘 Chapter 1 Çöz</button>
             <button class="menu-btn" onclick="initGame(2)">📙 Chapter 2 Çöz</button>
-            <button class="menu-btn mixed" onclick="initGame(3)">🎲 Karışık Çöz (1 & 2)</button>
+            <button class="menu-btn" onclick="initGame(3)">📗 Chapter 3 Çöz</button>
+            <button class="menu-btn mixed" onclick="initGame(4)">🎲 Karışık Çöz (1, 2 & 3)</button>
         </div>
 
         <!-- QUIZ EKRANI -->
@@ -516,7 +517,7 @@ obvious (adj) / apaçık, belli, aşikar
 obviously (adv)  / açık, besbelli
 `;
 
-        // CHAPTER 2 KELİMELERİ (YENİ EKLENENLERLE BİRLİKTE)
+        // CHAPTER 2 KELİMELERİ (BİR ÖNCEKİ HALİYLE KORUNDU)
         const rawCh2 = `
 accelerate (v) / hızlandırmak, hızlanmak, ivmek
 acceleration (n) / hızlanma, hız
@@ -679,6 +680,129 @@ verify (v) / doğrulamak, teyit etmek, tasdik etmek
 verifiable (adj) / doğrulanabilir, ispatlanabilir
 `;
 
+        // CHAPTER 3 KELİMELERİ (YENİ EKLENEN LİSTE)
+        const rawCh3 = `
+abandon (v) / terk etmek, vazgeçmek
+abandoned (adj) / terk edilmiş
+accomplish (v) / başarmak, başarı ile tamamlamak
+accomplishment (n) / başarı
+adapt (v) / uyarlamak, ayarlamak, intibak etmek
+adapted (adj) / uydurulmuş, uyumlu
+adaptable (adj) / uyum sağlayabilir
+adequate (adj) / yeterli, kafi
+adequately (adj) / yeterli biçimde
+adjust (v) / düzenlemek, ayarlamak, uydurmak
+adjustable (adj) / ayarlanabilir, uyumlu hale getirilebilir
+adjustment (n) / düzenleme, ayarlama
+appreciate (v) / takdir etmek, beğenmek, değer vermek
+appreciate (v) / değer bakımından artmak
+appropriate (adj) / uygun
+appropriately (adj) / uygun biçimde
+area (n) / alan, saha
+attitude (n) / tutum, davranıș, tavır
+circumstance (n) / durum, şart, vaziyet, olay, kader
+commune (v) / düşünce alışverişinde bulunmak, sohbet etmek, samimi biçimde konuşmak
+conduct (n) / davranış 
+conduct (v) / gerçekleştirmek, yürütmek
+conduct (v) / götürmek
+conduct (v) / orkestra yönetmek
+conductor (n) / orkestra șefi
+conflict (n) / çatışma
+conflict (v) / çatışmak
+conflicting (adj) / çatışan, zıt
+consume (v) / tüketmek, yok etmek
+consumer (n) / tüketici
+consumption (n) / tüketim
+convene (v) / toplanmak, toplamak, toplantıya çağırmak
+coordinate (v) / düzenlemek, birleştirmek
+coordinated (adj) / düzenli, planlı
+coordination (n) / eşgüdüm
+correspond (v) / -e uymak, tekabül etmek, karşılık gelmek
+corresponding (adj) / karşılık olarak gelen, aynı
+correspond (n) / yazışma
+credible (adj) / inanılır, güvenilir
+credibility (n) / inanılırlık, güvenilirlik, itibar
+dedicate (v) / adamak, ayırmak, vakfetmek, ithaf etmek
+dedicated (adj) / adanmış
+deficient (adj) / eksik, noksan, yetersiz
+deficiency (n) / eksiklik, yetmezlik
+deviate (v) / sapmak, ayrılmak
+deviation (n) / sapma
+discrete (adj) / ayrı, farklı
+disperse (v) / dağıtmak, yaymak, ışınlarına ayırmak
+dispose (v) / dağıtmak, düzenlemek, yok etmek, imha etmek, vermek, elden çıkarmak 
+estimate (v) / tahmin etmek, kestirmek, değer biçmek
+estimate (adj) / tahmini
+estimation (n) / tahmin
+exclude (v) / dışında bırakmak, dışında tutmak
+excluding (n) / hariç, dışında
+exclusive (adj) / çok özel, herkese göre değil
+exert (v) / güç kullanmak, gayret sarfetmek
+explicit (adj) / açık, sarih
+explicitly (adj) / açık biçimde 
+exploit (v) / sömürmek, kullanmak
+exploitation (n) / kullanım
+exploitation (n) / sömürü
+feature (v) / özellik, asıl film, uzun makale, önplana çıkarmak, önemli rol oynamak
+features (n) / yüz parçaları
+feature (n) / makale
+final (adj) / son, kesin
+finalize (v) / sonlandırmak
+finally (adj) / son olarak
+image (n) / imaj, görüntü, hayal, imge
+imagery (n) / imge kullanımı 
+intellect (n) / akıl, zihin, idrak, intelekt, akıl sahibi
+intellectual (n) / entelektüel
+intelligent (adj) / akıllı, zeki, anlayışlı
+intelligence (n) / istihbarat
+labour (n) / çalışma, iş, emek, işçi sınıfı, doğum sancısı, zahmet
+maintain (v) / sürdürmek, devam ettirmek, korumak, beslemek, bakmak, bakım yapmak, iddia etmek, ileri sürmek
+maintenance (n) / devam ettirme
+maintain (v) / bakım yapmak
+maintenance (n) / bakım
+manifest (v) / ortaya koymak, açık hale getirmek, göstermek
+manifest (adj) / açık, kolayca göstermek
+manifestation (n) / gösterge
+motive (n) / insanı motive eden şey, güdü, saik, güç, itici güç, neden
+motivate (v) / harekete geçirmek, uyarmak
+motivated (adj) / motive olmuş, harekete geçirilmiş, uyarılmış 
+norm (n) / norm, standart, örnek
+occupy (v) / meşgul etmek, bir yerde bulunmak, işgal etmek
+occupation (n) / işgal
+orientate (v) / yönlendirmek, belli bir pozisyona çevirmek 
+plot (n) / gizli plan, entrika 
+plot (v) / komplo kurmak, gizli plan yapmak
+plot (n) / olay örgüsü
+plot (n) / harita, plan yapmak
+pole (n) / direk
+pole (n) / kutup
+polar (adj) / kutuba ait, kutupta olan
+previous (adj) / önceki, evvelki, eski, sabık
+previously (adj) / önceleri, eskiden 
+proprietor (n) / ticari bir kuruluşun sahibi, arazi veya mülk sahibi
+rational (adj) / mantıklı, makul, rasyonel
+rationalism (n) / akılcılık
+rationalist (n) / mantıkçı, gerçekçi
+relevance (n) / ilişki, bağlantı
+rely on/upon (v) / güvenmek, itimat etmek
+reliable (adj) / güvenilir
+reliance (n) / güven, bağımlılık
+reveal (v) / ortaya çıkarmak, ele vermek, ifşa etmek, açığa vurmak
+rotate (v) / dönmek, döndürmek, sırayla çalışmak
+satellite (n) / uydu
+scheme (n) / entrika, plan, proje
+seek (v) / aramak, araştırmak, çabalamak
+source (n) / kaynak, köken
+superficial (adj) / derin olmayan, yüzeysel 
+superficiality (n) / yüzeysellik
+task (n) / iş, görev, vazife, ödev
+transition (n) / geçiş, geçme, değişim
+underlie (v) / altında bulunmak, yatmak, temelini oluşturmak
+underlying (adj) / altta yatan
+visual (n) / görsel, görülebilir 
+visualize (v) / görselleştirmek, kafada canlandırmak
+`;
+
         // YENİ AKILLI AYRIŞTIRICI (PARSER)
         function parseWords(text) {
             const lines = text.split('\n');
@@ -717,7 +841,8 @@ verifiable (adj) / doğrulanabilir, ispatlanabilir
         // Veri listeleri
         const listCh1 = parseWords(rawCh1);
         const listCh2 = parseWords(rawCh2);
-        const listMixed = [...listCh1, ...listCh2];
+        const listCh3 = parseWords(rawCh3);
+        const listMixed = [...listCh1, ...listCh2, ...listCh3];
 
         // Global Değişkenler
         let quizPool = [];         
@@ -772,8 +897,11 @@ verifiable (adj) / doğrulanabilir, ispatlanabilir
                 selectedList = listCh2;
                 modeLabel.textContent = "Bölüm: Chapter 2";
             } else if (mode === 3) {
+                selectedList = listCh3;
+                modeLabel.textContent = "Bölüm: Chapter 3";
+            } else if (mode === 4) {
                 selectedList = listMixed;
-                modeLabel.textContent = "Bölüm: Karışık (1 & 2)";
+                modeLabel.textContent = "Bölüm: Karışık (1, 2 & 3)";
             }
 
             globalDistractorPool = listMixed; // Yanlış şıklar her zaman karışık havuzdan gelsin
