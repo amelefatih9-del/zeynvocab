@@ -327,7 +327,9 @@
             <button class="menu-btn" onclick="initGame(1)">📘 Chapter 1 Çöz</button>
             <button class="menu-btn" onclick="initGame(2)">📙 Chapter 2 Çöz</button>
             <button class="menu-btn" onclick="initGame(3)">📗 Chapter 3 Çöz</button>
-            <button class="menu-btn mixed" onclick="initGame(4)">🎲 Karışık Çöz (1, 2 & 3)</button>
+            <button class="menu-btn" onclick="initGame(4)">📕 Chapter 4 Çöz</button>
+            <button class="menu-btn" onclick="initGame(5)">📓 Chapter 5 Çöz</button>
+            <button class="menu-btn mixed" onclick="initGame(6)">🎲 Karışık Çöz (Tümü)</button>
         </div>
 
         <!-- QUIZ EKRANI -->
@@ -394,7 +396,7 @@
     </div>
 
     <script>
-        // CHAPTER 1 KELİMELERİ
+        // CHAPTER 1
         const rawCh1 = `
 alter (v) / bir şeyin yapısını değiştirmek
 analysis/ analyses (n) / analiz
@@ -517,7 +519,7 @@ obvious (adj) / apaçık, belli, aşikar
 obviously (adv)  / açık, besbelli
 `;
 
-        // CHAPTER 2 KELİMELERİ (BİR ÖNCEKİ HALİYLE KORUNDU)
+        // CHAPTER 2
         const rawCh2 = `
 accelerate (v) / hızlandırmak, hızlanmak, ivmek
 acceleration (n) / hızlanma, hız
@@ -639,6 +641,10 @@ precise (adj) / tam, kesin, hassa
 precisely (adj) / kesin biçimde, net olarak, tam olarak
 react (v) / -e tepki göstermek, cevap vermek
 reaction (n) / reaksiyon, tepki
+`;
+
+        // CHAPTER 3
+        const rawCh3 = `
 respective (n) / kendi
 respectively (adj) / sırayla, önem sırasına göre
 segment (n) / parça, fragman
@@ -680,8 +686,8 @@ verify (v) / doğrulamak, teyit etmek, tasdik etmek
 verifiable (adj) / doğrulanabilir, ispatlanabilir
 `;
 
-        // CHAPTER 3 KELİMELERİ (YENİ EKLENEN LİSTE)
-        const rawCh3 = `
+        // CHAPTER 4
+        const rawCh4 = `
 abandon (v) / terk etmek, vazgeçmek
 abandoned (adj) / terk edilmiş
 accomplish (v) / başarmak, başarı ile tamamlamak
@@ -803,6 +809,133 @@ visual (n) / görsel, görülebilir
 visualize (v) / görselleştirmek, kafada canlandırmak
 `;
 
+        // CHAPTER 5 (YENİ EKLENEN LİSTE)
+        const rawCh5 = `
+acquire (v) / edinmek
+acquisition (n) / alma, alım, edinim
+acquisitive (adj) / sahiplenmeye veya toplamaya istekli
+administer (v) / yönetmek
+administer (v) / vermek, tatbik etmek
+administration (n) / yönetim
+allege (v) / iddia etmek
+allegedly (adv)  / iddiaya göre
+allegation (n) / iddia
+allocate (v) / tahsis etmek, ayırmak
+analogy (n)  / benzerlik
+analogous (adj) / benzer
+appraise (v)  / değerlendirmek, değer biçmek
+appraisal (n) / değerlendirme
+appraiser (n)  / değerlendirmeyi yapan kimse
+assemble (v) / toplamak, montaj yapmak
+assure (v) / emin kılmak, garanti vermek
+assurance (n) / kesinlik, güvenlik
+attribute (n)  / ana özellik
+attribute to (v) / bağlamak, atfetmek
+avail (n) / amaç, avantaji kullanım ( no avail: boşuna, beyhude )
+avail (v) / fayda sağlamak, avantajını kullanmak
+available (adj) / elde edilebilir, ulaşılabilir
+axis (n) / aks, eksen
+capable (adj) / yetenekli, kapasiteli
+capability (n) / yetenek, kapasite
+cease (v) / durmak, durdurmak, engellemek
+ceasefire (v) / ateşkes yapmak, ateşkes ilan etmek
+ceaseless (adj) / aralıksız, durmaksızın
+constitute (v) / oluşturmak
+constitution (n) / anayasa
+constituent (n) / ana parça
+contaminate (v) / bozmak, kirletmek
+contaminated (n) / kirletici madde
+contaminated (adj) / kirlenmiş, bozulmuş
+contradict (v) / ters düşmek
+contradiction (n) / zıtlık, çelişki 
+dense (adj) / yoğun, kalın
+densely (adv)/ yoğun biçimde
+density (n) / yoğunluk
+discourse (n) / konuşma, iletişim
+distribute (v) / dağıtmak
+distribution (n) / dağıtım
+diverse (adj) / çeşitli, farklı
+diversify (v) / çeşitlenmek
+diversity (n) / çeşitlilik
+dominate (v) / egemen, baskın olma
+dominating (adj) / egemen, baskıcı, baskın
+elaborate (adj) / detaylı, ayrıntılı
+elaborate (v) / detaylı hale getirmek, ayrıntı vermek
+elaborately (adv) / detaylı biçimde
+eliminate (v) / ekarte etmek, saf dışı bırakmak, elemek
+elimination (n) / eleme, yok etme
+embody (v) / içermek, oluşturmak, somut hale getirmek
+embodiment (n) / somut hali
+emotion (n) / duygu, his
+emotional (adj) / duygusal, duygu ile ilgili
+eventual (adj) / son, nihai
+eventually (adv) / sonunda, nihayet
+forgo, forego (v) / vazgeçmek, bırakmak
+fragment (n) / parça, bölüm
+fragment (v) / parçalanmak
+fragmented (adj) / farklı parçaları içinde bulundurma
+fragmentary (adj) / ancak küçük parçalar halinde var olan
+goal (n) / hedef, amaç
+heredity (n) / kalıtım
+impress (v) / etkilemek
+impressive (adj) / etkileyici
+make an impression (v phrase) / izlenim oluşturmak
+incident (n) / olay, beklenmedik olay
+incidental (adj) / beklenmedik, kazara olan
+incompatible (adj) / uyumsuz
+incompatibility (n) / uyumsuzluk
+induce (v) / teşvik etmek, harekete geçirmek
+integrate (v) / entegre etmek, bütünleştirmek
+integrated (adj) / entegre olmuş, tam hale getirilmiş, bütünlük kazandırılmış
+internal (adv) / içe ait, dahili, iç
+internal (adv) / içte meydana gelen
+internally (adj) / içsel olarak
+intervene (v) / bir şeyin içinde yer almak, karışmak
+intervene (v) / iki olay arasında oluşmak, araya girmek, meydana gelmek
+intervention (n) / müdahale
+interventionist (n) / müdahaleci
+interventionism (n) / müdahalecilik
+investigate (v) / incelemek, araştırmak
+investigative (n) / araştırma, inceleme
+investigator (n) / araştırmacı
+judicial (adj) / kanun veya yasa ile ilgili
+justify (v) / doğrulamak, teyit etmek
+justifiable (adj) / doğrulanabilir, haklı çıkarılabilir, savunulabilir
+justification (n) / doğrulayıcı, açıklama, mahzur gösterme, mazeret, sebep, temize çıkarma
+justified (adj) / doğru bulunmuş, haklı görülmüş
+litigate (v) / mahkemede tartışmak ve hükme bağlamak
+logic (n) / mantık
+logical (adj) / mantıklı
+logically (adv) / mantıklı biçimde
+perpendicular (adj) / dikey, düşey
+persist (v) / ısrar etmek
+persistence (n) / ısrar, azim
+predict (v) / tahmin etmek, kestirmek
+predictable (adj) / tahmin edilebilir, kestirilebilir 
+proportion (n) / oran
+proportional (adj) / orantılı
+reject (v) / reddetmek, geri çevirmek
+release (v) / serbest bırakmak, salmak
+release (v) / yayınlamak, piyasaya çıkarmak
+release (n) / yayın, bildiri
+research (n) / araştırma 
+research (v) / araştırma yapmak
+researcher (n) / araştırmacı 
+reservoir (n) / rezervuar, ana depo
+revolt (v) / ayaklanmak, karşı çıkmak, isyan etmek
+revolt (n) / ayaklanma, isyan
+speculate (v) / tahminde bulunmak
+speculation (n) / tahmine dayalı yorum
+sphere (n) / küre 
+spheroid (n)  / küre şeklinde katı madde
+spontaneous (adj) / kendiliğinden olan
+stipulate (v) / şart koşmak
+stipulation (n) / şart, koşul
+subside (v) / dinmek, hafiflemek
+subsidence (n)  / çökme, batma
+subsidize (v) / mali olarak desteklemek
+`;
+
         // YENİ AKILLI AYRIŞTIRICI (PARSER)
         function parseWords(text) {
             const lines = text.split('\n');
@@ -842,7 +975,9 @@ visualize (v) / görselleştirmek, kafada canlandırmak
         const listCh1 = parseWords(rawCh1);
         const listCh2 = parseWords(rawCh2);
         const listCh3 = parseWords(rawCh3);
-        const listMixed = [...listCh1, ...listCh2, ...listCh3];
+        const listCh4 = parseWords(rawCh4);
+        const listCh5 = parseWords(rawCh5);
+        const listMixed = [...listCh1, ...listCh2, ...listCh3, ...listCh4, ...listCh5];
 
         // Global Değişkenler
         let quizPool = [];         
@@ -900,8 +1035,14 @@ visualize (v) / görselleştirmek, kafada canlandırmak
                 selectedList = listCh3;
                 modeLabel.textContent = "Bölüm: Chapter 3";
             } else if (mode === 4) {
+                selectedList = listCh4;
+                modeLabel.textContent = "Bölüm: Chapter 4";
+            } else if (mode === 5) {
+                selectedList = listCh5;
+                modeLabel.textContent = "Bölüm: Chapter 5";
+            } else if (mode === 6) {
                 selectedList = listMixed;
-                modeLabel.textContent = "Bölüm: Karışık (1, 2 & 3)";
+                modeLabel.textContent = "Bölüm: Karışık (Tümü)";
             }
 
             globalDistractorPool = listMixed; // Yanlış şıklar her zaman karışık havuzdan gelsin
