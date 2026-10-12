@@ -77,8 +77,8 @@
 
         /* MENU SCREEN */
         .menu-box {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 12px;
             padding: 10px 0;
         }
@@ -89,14 +89,14 @@
             border: none;
             border-radius: 10px;
             padding: 16px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .menu-btn:hover {
@@ -105,8 +105,10 @@
         }
         
         .menu-btn.mixed {
+            grid-column: span 2;
             background: linear-gradient(135deg, #8b5cf6, #3b82f6);
             margin-top: 8px;
+            font-size: 1.15rem;
         }
         
         .menu-btn.mixed:hover {
@@ -311,6 +313,8 @@
             .option-btn { padding: 12px; font-size: 0.95rem; }
             .stats-summary { grid-template-columns: 1fr; }
             .keyboard-tip { display: none; }
+            .menu-box { grid-template-columns: 1fr; }
+            .menu-btn.mixed { grid-column: span 1; }
         }
     </style>
 </head>
@@ -324,12 +328,14 @@
 
         <!-- MENU EKRANI -->
         <div id="menu-screen" class="menu-box">
-            <button class="menu-btn" onclick="initGame(1)">📘 Chapter 1 Çöz</button>
-            <button class="menu-btn" onclick="initGame(2)">📙 Chapter 2 Çöz</button>
-            <button class="menu-btn" onclick="initGame(3)">📗 Chapter 3 Çöz</button>
-            <button class="menu-btn" onclick="initGame(4)">📕 Chapter 4 Çöz</button>
-            <button class="menu-btn" onclick="initGame(5)">📓 Chapter 5 Çöz</button>
-            <button class="menu-btn mixed" onclick="initGame(6)">🎲 Karışık Çöz (Tümü)</button>
+            <button class="menu-btn" onclick="initGame(1)">📘 Chapter 1</button>
+            <button class="menu-btn" onclick="initGame(2)">📙 Chapter 2</button>
+            <button class="menu-btn" onclick="initGame(3)">📗 Chapter 3</button>
+            <button class="menu-btn" onclick="initGame(4)">📕 Chapter 4</button>
+            <button class="menu-btn" onclick="initGame(5)">📓 Chapter 5</button>
+            <button class="menu-btn" onclick="initGame(6)">📑 Chapter 6</button>
+            <button class="menu-btn" onclick="initGame(7)">📚 Chapter 7</button>
+            <button class="menu-btn mixed" onclick="initGame(8)">🎲 Karışık Çöz (Tümü)</button>
         </div>
 
         <!-- QUIZ EKRANI -->
@@ -809,7 +815,7 @@ visual (n) / görsel, görülebilir
 visualize (v) / görselleştirmek, kafada canlandırmak
 `;
 
-        // CHAPTER 5 (YENİ EKLENEN LİSTE)
+        // CHAPTER 5 
         const rawCh5 = `
 acquire (v) / edinmek
 acquisition (n) / alma, alım, edinim
@@ -936,6 +942,249 @@ subsidence (n)  / çökme, batma
 subsidize (v) / mali olarak desteklemek
 `;
 
+        // CHAPTER 6 
+        const rawCh6 = `
+absorb (v) / emmek, içine almak
+absorb (v) / anlamak, iyice sindirmek
+absorb (v) / işine kendini tüm dikkatini vermek
+absorption (n) / emme, sindirme
+abstract (n) / boyut
+abstract (n) / genel ifade, özet
+accurate (adj) / tam, doğru
+accurately (adv) / doğru biçimde
+accuracy (n) / doğruluk, kesinlik
+aid (n) / yardım
+aid (v) / yardım etmek
+client (n) / müşteri
+compound (n) / birleşim, birleşke
+compound (v) / bir araya gelmek, birleşmek
+confront (v) / karşılaşmak, karşı karşıya gelmek
+contract (n) / kontrat, anlaşma
+contract (v) / kontrat imzalamak, anlaşma yapmak
+contract (v) / kasılmak, küçülmek
+contrary (adj) / ters, zıt
+on the contrary (phrase)  / tersine
+to the contrary (phrase) / tersi, zıttı
+contrary to (prep. phrase) / tersine
+deny (v) / reddetmek, inkar etmek
+dictate (v) / emir vermek
+dictate (v) / etkilemek ve gerekli hale getirmek
+dictate (n) / prensip, emir
+dictator (n) / diktatör
+diffuse (v) / yayılmak, yaymak
+diffuse (adj)  / yaygın
+diffusion (n) / yayılma
+dispute (n) / tartışma, anlaşmazlık
+dispute (v) / tartışmak, tartışmaya açmak
+disputable (adj)  / tartışmalı, tartışmaya açık
+duration (n) / süre
+edit (v) / baskıya hazırlamak
+edit out (v) / yayından, baskıdan çıkarmak
+enlighten (v) / aydınlatmak, bilgilendirmek
+enlightened (adj) / aydın, anlayışlı
+enlightened (adj)  / aydınlanmış
+enlightenment (n) / aydınlatıcı bilgi, aydınlanma
+err (v) / hata yapmak, yanlış yapmak, yanılmak
+execute (v) / icra etmek, yerine getirmek, uygulamak
+execution (n) / icraat, uygulama
+execution (n) / infaz, ölüm cezasi
+executive (n) / idareci, yönetici
+expel (v) / uzaklaşmak, sürmek
+fraud (n) / sahtekarlık, dolandırıcılık
+fraudster (n) / sahtekar, dolandırıcı
+grant (n) / bağış, burs
+grant (v) / vermek
+grant (v) / doğruluğunu kabul etmek
+take for grant (phrase) / peşinen kabul etmek
+gravity (n) / yer çekimi
+homogeneous (adj) and / tek tip, aynı
+implement (n) / alet
+implement (v) / uygulamak
+implementation (n) / uygulama
+impose (v) / zorla kabul ettirmek, yüklemek
+incorporate (v) / dahil etmek, içine katmak
+insist (v) / ısrar etmek
+institute (n) / enstitü, kurum
+institute (v) / kurumlaştırmak, başlatmak
+institution (n) / kurum, enstitü
+instruct (v) / emir, talimat vermek
+instruct (v) / öğretmek
+instruction (n) / emir, talimat
+instruction (n) / eğitim
+intersect (v) / kesişmek
+intersection (n) / kesişim
+interval (n) / aralık, mola
+kindred (n) / akraba, aynı soydan, aynı türden
+label (n) / etiket, marka
+label (v) / etiketlemek, isimlendirmek
+legitimate (adj) / yasal, meşru, geçerli
+objective (n) / amaç
+objective (adj) / tarafsız
+overlap (v) / örtüşmek, çakışmak
+overlap (n) / örtüşme, ortak yön
+overlapping (adj) / ortüşen, ortak
+perpetrate (v) / suç işlemek
+perpetrator (n) / suçlu, suçun faili
+preliminary (adj) / ön, hazırlık niteliğinde
+preliminary (n) / giriş, sunuş, ön hazırlık
+radius (n) / yarıçap
+respond (v) / cevap, tepki vermek
+response (n) / cevap, tepki
+retain (v) / alıkoymak, bırakmamak, tutmak
+retention (n) / tutma, bırakmama, unutmama
+retard (v) / yavaşlatmak, geciktirmek
+retarded (n) / gerizekalı
+retardation (n) / yavaşlama, gecikme
+rudimentary (adj) / temel, gelişmemiş
+secure (v) / emniyete, emniyet altına almak
+secure (adj) / güvenli, emniyetli
+security (n) / emniyet, güvenlik
+stimulate (v) / uyarmak, teşvik etmek
+stimulant (n) / uyarıcı
+stimulating (adj) / cesaret verici, teşvik edici
+subtle (adj) / hemen görülmeyen, farkedilmeyen, ince, hafif
+superior (adj) / daha iyi, üstün
+superiority (n) / üstünlük
+supplement (n) / takviye, ilave
+supplement (v) / takviye etmek, ilave etmek
+supplementary (adj) / ilave, ek
+suppress (v) / bastırmak, zor kullanarak durdurmak
+symptom (n) / semptom, belirti, işaret
+synthetic (adj) / yapay
+tiny (adj) / çok küçük
+trait (n) / karakter özelliği
+transfer (v) / transfer etmek, aktarmak
+transform (v) / dönüşmek, donüştürmek
+transformation (n) / dönüşüm
+trivial (adj) / değersiz, önemsiz
+vast (adj)  / son derece büyük, geniş, çok büyük
+`;
+
+        // CHAPTER 7 (YENİ EKLENEN LİSTE)
+        const rawCh7 = `
+accompany (v) / eşlik etmek, refakat etmek
+adult (n) / yetişkinlik, yetişkinlik dönemi
+agitate (v) / tartışma, ajite etmek
+agitation (n) / çalkantı, heyecan, sıkıntı, dalgalanma
+appeal (v) / cezbetmek, cazip gelmek
+appeal (v) / (resmi olarak) müracaat etmek
+appeal (n) / çekici, cazibe
+appealing (adj) / çekici, cazip
+arouse (v) / uyandırmak, harekete geçirmek
+aspect (n) / yön, özellik, görünüş
+assist (v) / yardım etmek
+assist (n) / yardım, destek 
+attain (v) / ulaşmak, elde etmek, başarmak
+attainable (adj) / elde edilebilir, ulaşılabilir
+awe (n) / korku
+awe (v) / korkmak, korkutmak
+benefit (n) / fayda, yarar
+benefit (n) / finansal destek, destek 
+beneficial (adj) / yararlı, faydalı
+civic (adj) / şehre, halka ait olan
+clarify (v) / açıklamak, açıklığa kavuşturmak
+collide (v) / çarpmak, vurmak
+collusion (n) / çarpışma
+comment (v) / yorum yapmak
+commit (v) / suç işlemek
+commit (v) / söz vermek, söz vererek kendini bağlamak
+commit suicide (v) / intihar etmek
+compute (v) / hesaplamak
+computation (n) / hesaplama
+conform (v) / uyum sağlamak, boyun eğmek
+conformity (n) / uyum
+conjunction (n) / birlik, birleşme
+console (v) / rahatlamak, teselli etmek
+contemplate (v) / bir şey üzerine uzun uzun düşünmek 
+contemplation (n) / uzun düşünce
+contend (v) / mücadele etmek, uğraşmak
+contend (v) / rekabet etmek, yarışmak
+contend (v) / iddia etmek, ileri sürmek
+contender (n) / rakip, yarışmacı 
+contingent (n) / topluluk, grup
+contingent (adj) / -e bağlı
+controversy (n) / tartışma, ihtilaf, anlaşmazlık
+controversial (adj) / ihtilaflı, tartışmalı
+converse (adj) / ters, muhalif
+converse (n) / tersi
+conversly (adv) / bunun tersine
+cooperate (v) / işbirliği yapmak
+cooperation (n) / işbirliği
+decline (v) / azalmak, gerilemek
+decline (n) / azalma, gerileme
+decline (v) / reddetmek
+degenerate (v) / kötülemek, bozulmak, kötüye gitmek
+degeneration (n) / kötüye gitme, bozulma
+extract (v) / çıkarmak, söküp çıkarmak 
+extract (n) / alıntı
+fertile (adj) / verimli
+fertile (adj) / doğurabilir, çoğalabilir
+fertility (v) / verimlilik
+fertilizer (v) / gübre
+found (v) / kurmak
+foundation (n) / temel, asıl
+foundation stone (n) / temel taşı
+hemisphere (n) / yarı küre
+identical (adj) / aynı
+incline (v) / eğmek, eğilmek, eğilim göstermek
+inclination (n) / eğilim, eğme, meyil
+income (n) / gelir
+instinct (n) / içgüdü
+instinctive (adj) / içgüdüye dayalı
+interact (v) / birbirini etkilemek
+interaction (n) / etkileşim
+interactive (adj) / birbirini etkileyen
+interlude (n) / ara, ara dönem, ara oyun
+legal (adj) / yasal, hukuk ile ilgili
+legality (n) / yasallık, meşruluk
+legalize (v) / yasal hale getirmek
+locate (v) / yerleştirmek, konumlandırmak, yerini belirlemek
+medium (adj) / orta, orta derece
+medium (adj) / orta pişmiş
+medium (n) / araç, vasıta, ortam
+minor (adj) / önemsiz
+niche (n) / uygun iş
+niche (n) / niş, uygun yer, mevki, oyuk, hücre
+oblige (v) / zorlamak, mecbur etmek
+obligation (n) / zorunluluk, mecburiyet 
+obligatory (adj) / mecburi, zorunlu 
+obliged (adj) / mecbur kalmış, zorunlu 
+participate (v) / katılmak, yer almak
+participation (n)/ katılım
+participant (n) / katılımcı
+planet (n) / gezegen
+propagate (v) / üretmek
+propensity (n) / eğilim, meyil
+prosper (v) / başarılı olmak, zenginleşmek
+prosperity (n) / zenginlik, refah
+prosperous (adj) / zengin, refah içinde
+protest (v,n) / protesto, protesto etmek
+radical (adj) / köklü, radikal
+radically (adv) / kökten, temelden
+reign (v) / saltanat sürmek, hükümdarlık yapmak
+reinforce (v) / güçlendirmek, kuvvetlendirmek
+reinforced concrete (n) / güçlendirilmiş beton, betonarme
+revise (v) / tekrar gözden geçirmek, değişiklik yapmak 
+revised (adj) / gözden geçirilmiş
+sanction (n) / izin, müsade, onay
+sanction (v) / onaylamak
+sanction (n) / müeyyide
+scale (n) / ölçek
+stratum (n) / katman, tabaka
+sustain (v) / sürdürmek, devam ettirmek
+sustainable (adj) / sürdürülebilir, devam ettirilebilir
+topic (n) / konu, başlık
+uniform (adj) / tek düze, aynı
+uniformly (adv) / değişmez biçimde, aynı şekilde
+urban (adj) / şehre ait
+urbanize (v) / şehirleştirmek
+urbanization (n) / şehirleşme
+virtual (adj) / neredeyse, hemen hemen
+virtually (adv) / hemen hemen, neredeyse
+voluntary (adj) / gönüllü, istekli
+voluntarily (adv) / gönüllü olarak
+`;
+
         // YENİ AKILLI AYRIŞTIRICI (PARSER)
         function parseWords(text) {
             const lines = text.split('\n');
@@ -977,7 +1226,9 @@ subsidize (v) / mali olarak desteklemek
         const listCh3 = parseWords(rawCh3);
         const listCh4 = parseWords(rawCh4);
         const listCh5 = parseWords(rawCh5);
-        const listMixed = [...listCh1, ...listCh2, ...listCh3, ...listCh4, ...listCh5];
+        const listCh6 = parseWords(rawCh6);
+        const listCh7 = parseWords(rawCh7);
+        const listMixed = [...listCh1, ...listCh2, ...listCh3, ...listCh4, ...listCh5, ...listCh6, ...listCh7];
 
         // Global Değişkenler
         let quizPool = [];         
@@ -1014,7 +1265,7 @@ subsidize (v) / mali olarak desteklemek
         }
 
         function showMenu() {
-            menuScreen.style.display = 'flex';
+            menuScreen.style.display = 'grid'; // Grid olarak ayarlamıştık CSS'te
             quizScreen.style.display = 'none';
             resultScreen.style.display = 'none';
             infoPanel.style.display = 'block';
@@ -1041,6 +1292,12 @@ subsidize (v) / mali olarak desteklemek
                 selectedList = listCh5;
                 modeLabel.textContent = "Bölüm: Chapter 5";
             } else if (mode === 6) {
+                selectedList = listCh6;
+                modeLabel.textContent = "Bölüm: Chapter 6";
+            } else if (mode === 7) {
+                selectedList = listCh7;
+                modeLabel.textContent = "Bölüm: Chapter 7";
+            } else if (mode === 8) {
                 selectedList = listMixed;
                 modeLabel.textContent = "Bölüm: Karışık (Tümü)";
             }
