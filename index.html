@@ -335,7 +335,8 @@
             <button class="menu-btn" onclick="initGame(5)">📓 Chapter 5</button>
             <button class="menu-btn" onclick="initGame(6)">📑 Chapter 6</button>
             <button class="menu-btn" onclick="initGame(7)">📚 Chapter 7</button>
-            <button class="menu-btn mixed" onclick="initGame(8)">🎲 Karışık Çöz (Tümü)</button>
+            <button class="menu-btn" onclick="initGame(8)">📒 Chapter 8</button>
+            <button class="menu-btn mixed" onclick="initGame(9)">🎲 Karışık Çöz (Tümü)</button>
         </div>
 
         <!-- QUIZ EKRANI -->
@@ -1060,7 +1061,7 @@ trivial (adj) / değersiz, önemsiz
 vast (adj)  / son derece büyük, geniş, çok büyük
 `;
 
-        // CHAPTER 7 (YENİ EKLENEN LİSTE)
+        // CHAPTER 7 
         const rawCh7 = `
 accompany (v) / eşlik etmek, refakat etmek
 adult (n) / yetişkinlik, yetişkinlik dönemi
@@ -1185,6 +1186,83 @@ voluntary (adj) / gönüllü, istekli
 voluntarily (adv) / gönüllü olarak
 `;
 
+        // CHAPTER 8 (YENİ EKLENEN LİSTE)
+        const rawCh8 = `
+affiliate (v) / bağlanmak, yakınlık duymak
+affiliation (n) / bağlantı, yakınlık 
+collapse (v) / çökmek, yıkılmak
+collapse (v) / sönmek, başarısız olmak, göçmek
+collapse (n) / çöküş, yıkılma, sönme
+collapsed (adj) / çökmüş, büzülmüş
+commodity (n) / ticari eşya, ticari mal
+competence (n) / yetenek, ehliyet 
+competent (adj) / yetenekli, ehliyetli
+concentric (adj) / ortak merkezli
+confer (v) / konuşmak, görüş alışverişinde bulunmak
+confer (v) / vermek, bahşetmek
+conserve (v) / saklamak, muhafaza etmek, tasarruf etmek, korumak
+conservation (n) / koruma, muhafaza, doğal kaynakları koruma
+conservationist (n) / çevre korumacı
+corporate (adj) / ortak, ortaklaşa
+creditor (n) / alacaklı, kredi veren
+cumbersome (adj) / hantal, düzensiz
+defer (v) / ertelemek, geciktirmek
+degrade (v) / değerini düşürmek
+dissolve (v) / çözülmek
+divine (adj) / ilahi, yüce
+divinity (n) / ilahiyat
+friction (n) / sürtünme
+friction (n) / anlaşmazlık, sürtüşme
+fuse (n) / trafik sigortası
+fuse (v) / birleşmek, bir araya gelmek
+fusion (n) / erime, eriyip kaynaşma, füzyon
+horror (n) / korku, dehşet
+incentive (n) / teșvik
+incessant (adj) / sürekli, aralıksız
+incessantly (adv) / ara vermeden, sürekli olarak
+intermediate (adj) / orta düzey, ara düzey
+invade (v) / istila etmek, işgal etmek, saldırmak
+invader (n) / istilacı
+invasion (n) / istila, işgal, saldırı
+inverse (adj) / ters, aksi
+inverse (n) / ters durum, ters sonuç
+invoke (v) / yardım istemek, bașvurmak
+invoke (v) / çağrıştırmak
+migrate (v) / göç etmek
+migrant (n) / göçmen
+migration (n) / göç
+muscle (n) / kas
+navy (n) / donanma
+nutrient (n) / besleyici madde
+nutrition (n) / beslenme
+nutritionist (n) / beslenme uzmanı
+obsolete (adj) / modası geçmiş, eski
+odour (n) / koku, özel koku
+peasant (n) / köylü
+plead (v) / rica etmek, yalvarmak
+plead (v) / dilekçe vermek, dava açmak
+precipitate (v) / hızlandırmak
+precipitation (n) / acelecilik, hız
+prevail (v) / yaygın olmak, hakim olmak
+prevailing (adj) / yaygın olarak görülen, en geçerli
+prudence (n) / tutumluluk
+reform (v) / değişmek, değiştirmek, reform yapmak
+reform (n) / değişiklik
+refute (v) / çürütmek, yanlışlığını ispatlamak
+repudiate (v) / reddetmek, kabul etmemek
+revive (v) / canlanmak, yeniden hareketlenmek
+revival (n) / canlanma, diriliş
+schedule (n) / tarife, çizelge, liste
+sibling (n) / kardeş
+spectrum (n) / yelpaze, renk yelpazesi
+stereotype (n) / model, örnek
+texture (n) / doku, yapı
+tissue (n) / kağıt mendil
+tissue (n) / doku
+transact (v) / iş bitirmek
+transaction (n) / iş, muamele
+`;
+
         // YENİ AKILLI AYRIŞTIRICI (PARSER)
         function parseWords(text) {
             const lines = text.split('\n');
@@ -1228,7 +1306,8 @@ voluntarily (adv) / gönüllü olarak
         const listCh5 = parseWords(rawCh5);
         const listCh6 = parseWords(rawCh6);
         const listCh7 = parseWords(rawCh7);
-        const listMixed = [...listCh1, ...listCh2, ...listCh3, ...listCh4, ...listCh5, ...listCh6, ...listCh7];
+        const listCh8 = parseWords(rawCh8);
+        const listMixed = [...listCh1, ...listCh2, ...listCh3, ...listCh4, ...listCh5, ...listCh6, ...listCh7, ...listCh8];
 
         // Global Değişkenler
         let quizPool = [];         
@@ -1298,6 +1377,9 @@ voluntarily (adv) / gönüllü olarak
                 selectedList = listCh7;
                 modeLabel.textContent = "Bölüm: Chapter 7";
             } else if (mode === 8) {
+                selectedList = listCh8;
+                modeLabel.textContent = "Bölüm: Chapter 8";
+            } else if (mode === 9) {
                 selectedList = listMixed;
                 modeLabel.textContent = "Bölüm: Karışık (Tümü)";
             }
