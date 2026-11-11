@@ -336,7 +336,8 @@
             <button class="menu-btn" onclick="initGame(6)">📑 Chapter 6</button>
             <button class="menu-btn" onclick="initGame(7)">📚 Chapter 7</button>
             <button class="menu-btn" onclick="initGame(8)">📒 Chapter 8</button>
-            <button class="menu-btn mixed" onclick="initGame(9)">🎲 Karışık Çöz (Tümü)</button>
+            <button class="menu-btn" onclick="initGame(9)">📔 Chapter 9</button>
+            <button class="menu-btn mixed" onclick="initGame(10)">🎲 Karışık Çöz (Tümü)</button>
         </div>
 
         <!-- QUIZ EKRANI -->
@@ -1186,7 +1187,7 @@ voluntary (adj) / gönüllü, istekli
 voluntarily (adv) / gönüllü olarak
 `;
 
-        // CHAPTER 8 (YENİ EKLENEN LİSTE)
+        // CHAPTER 8 
         const rawCh8 = `
 affiliate (v) / bağlanmak, yakınlık duymak
 affiliation (n) / bağlantı, yakınlık 
@@ -1263,6 +1264,93 @@ transact (v) / iş bitirmek
 transaction (n) / iş, muamele
 `;
 
+        // CHAPTER 9 (YENİ EKLENEN LİSTE)
+        const rawCh9 = `
+adhere (v) / sıkı sıkı yapışmak, bağlı kalmak
+adhesive (n) / yapıştırıcı
+adhere to (v) / bağlı kalmak, itaatini sürdürmek 
+aggregate (n) / toplam
+aggregate (v) / toplamak, toplamını bulmak
+aggression (n) / saldırganlık, saldırı
+aggresive (adj) / saldırgan
+aggressive (adj) / girişken
+align (v) / hizalamak, aynı çizgide olmak
+allude to (v) / ima etmek, üstü kapalı bahsetmek
+allusion (n) / ima, işaret
+allusive (adj) / imalı, ima ile dolu
+ally (n) / müttefik
+ally (v) / birleşmek, arkadaşlık etmek, dostluk kurmak
+alliance (n) / ittifak
+cater (v) / yiyecek sağlamak, servis yapmak
+circulate (v) / dolaşmak, dolaştırmak
+circulation (n) / dolaşım, kan dolaşımı, tıraj
+coincide (v) / tesadüf etmek, çakışmak, rastlamak
+coincidence (n) / tesadüf
+consent (v) / razı olmak, izin vermek
+correlate (v) / birbiri ile ilgili olmak, uyum göstermek
+currency (n) / döviz, para birimi
+deprive someone of something (v) / birini bir şeyden mahrum bırakmak 
+deprivation (n) / mahrumiyet, yoksunluk 
+deprived (adj) / mahrum
+detriment (n) / zarar, hasar
+detrimental (adj) / zararlı, hasar verici
+detect (v) / tespit etmek, belirlemek
+detectable (adj) / fark edilebilir, tespit edilebilir 
+discern (v) / anlamak, ayırt etmek, farkına varmak
+discernible (adj) / ayırt edilebilir, fark edilebilir 
+dissipate (v) / dağılmak, israf etmek, dağıtmak
+dissipated (adj) / israf edilmiş, boşa gitmiş
+evolve (v) / gelişmek, dönüşmek
+evaluation (n) / evrim
+fallacy (n) / yanlış inanç, anlayış, düşünce
+fallacious (adj) / yanlış, hatalı
+finite (adj) / sınırlı, sonlu
+fraternal (adj) / kardeşçe, kardeşlere özgü
+fraternity (n) / kardeşlik, dostluk
+frustrate (v) / hayal kırıklığına uğratmak, cesaretini kırmak
+frustration (n) / hüsran, hayal kırıklığı
+frustrated (adj) / hüsrana uğramış, hayal kırıklığına uğramış
+invest (v) / yatırım yapmak, para yatırmak
+investment (n) / yatırım
+investor (n) / yatırımcı
+launch (v) / göndermek, fırlatmak
+legislate (v) / kanun, yasa çıkarmak
+legislation (n) / yasama
+liable (n) / sorumlu
+liability (n) / hukuki sorumluluk 
+liable to (adj) / olası, yakın, meyilli
+oscillate (v) / kararsız kalmak, tereddüt etmek
+oscillation (n) / tereddüt, kararsızlık
+pervade (v) / yayılmak, kaplamak, istila etmek
+pervasive (adj) / yaygın, hakim
+postulate (v) / farz etmek, varsaymak
+premise (n) / öncül durum, önkoşul
+premise (v) / temeline dayandırmak, temellendirmek
+proclaim (v) / ilan etmek
+provoke (v) / kızdırmak
+rebel (adj) / asi, muhalif
+rebel (v) / isyan etmek, karşı çıkmak
+rebellion (n) / isyan
+reluctance (adj) / isteksiz, gönülsüz
+reluctantly (adv) / isteksiz olarak
+reluctance (n) / isteksizlik
+reproduce (v) / doğurmak, üremek, üretmek
+reproduction (n) / üreme, çoğalma
+rigid (adj) / katı, sert
+secrete (v) / salgılamak, üretmek
+secretion (n) / salgılama
+subordinate (adj) / yardımcı düzeyde, 2.derece
+supreme (adj) / yüce
+territory (n) / bölge, arazi, alan
+treaty (n) / yazılı anlaşma 
+trend (n) / gidişat, yönelim, eğim, eğilim
+trendy (adj) / modaya uygun
+utilize (v) / kullanmak, yararlanmak
+utter (adj) / tümüyle, tam olarak
+utterly (adv) / tamamen, tümüyle 
+utter (v) / dile getirmek, söylemek
+`;
+
         // YENİ AKILLI AYRIŞTIRICI (PARSER)
         function parseWords(text) {
             const lines = text.split('\n');
@@ -1307,7 +1395,12 @@ transaction (n) / iş, muamele
         const listCh6 = parseWords(rawCh6);
         const listCh7 = parseWords(rawCh7);
         const listCh8 = parseWords(rawCh8);
-        const listMixed = [...listCh1, ...listCh2, ...listCh3, ...listCh4, ...listCh5, ...listCh6, ...listCh7, ...listCh8];
+        const listCh9 = parseWords(rawCh9);
+        
+        const listMixed = [
+            ...listCh1, ...listCh2, ...listCh3, ...listCh4, 
+            ...listCh5, ...listCh6, ...listCh7, ...listCh8, ...listCh9
+        ];
 
         // Global Değişkenler
         let quizPool = [];         
@@ -1380,6 +1473,9 @@ transaction (n) / iş, muamele
                 selectedList = listCh8;
                 modeLabel.textContent = "Bölüm: Chapter 8";
             } else if (mode === 9) {
+                selectedList = listCh9;
+                modeLabel.textContent = "Bölüm: Chapter 9";
+            } else if (mode === 10) {
                 selectedList = listMixed;
                 modeLabel.textContent = "Bölüm: Karışık (Tümü)";
             }
