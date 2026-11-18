@@ -80,7 +80,17 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            padding: 10px 0;
+            padding: 10px 5px 10px 0;
+            max-height: 60vh;
+            overflow-y: auto; /* Çok buton olunca taşmaması için eklendi */
+        }
+
+        .menu-box::-webkit-scrollbar {
+            width: 6px;
+        }
+        .menu-box::-webkit-scrollbar-thumb {
+            background-color: var(--border-color);
+            border-radius: 10px;
         }
 
         .menu-btn {
@@ -88,7 +98,7 @@
             color: white;
             border: none;
             border-radius: 10px;
-            padding: 16px;
+            padding: 14px;
             font-size: 1.05rem;
             font-weight: 600;
             cursor: pointer;
@@ -109,6 +119,7 @@
             background: linear-gradient(135deg, #8b5cf6, #3b82f6);
             margin-top: 8px;
             font-size: 1.15rem;
+            padding: 18px;
         }
         
         .menu-btn.mixed:hover {
@@ -174,11 +185,13 @@
         }
 
         .question-text {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 24px;
             line-height: 1.4;
             color: var(--text-main);
+            text-align: center;
+            word-break: break-word; /* Uzun kelimelerin taşmasını engeller */
         }
 
         .options-grid {
@@ -193,16 +206,24 @@
             background-color: rgba(30, 41, 59, 0.7);
             border: 2px solid var(--border-color);
             border-radius: 10px;
-            padding: 16px;
+            padding: 14px 16px;
             text-align: left;
             color: var(--text-main);
-            font-size: 1.05rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
             position: relative;
             outline: none;
+            /* Uzun Türkçe anlamların alt satıra geçmesi için düzenlendi */
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.4;
+        }
+
+        .option-text-val {
+            flex: 1; /* Uzun metinlerin kalan boşluğu doldurmasını sağlar */
         }
 
         .option-btn:hover:not(:disabled) {
@@ -218,11 +239,12 @@
             color: var(--text-muted);
             font-size: 0.8rem;
             font-weight: 700;
-            padding: 2px 6px;
-            border-radius: 4px;
+            padding: 4px 8px;
+            border-radius: 6px;
             margin-right: 12px;
-            min-width: 22px;
+            min-width: 28px;
             text-align: center;
+            display: inline-block;
         }
 
         .option-btn.correct {
@@ -337,7 +359,8 @@
             <button class="menu-btn" onclick="initGame(7)">📚 Chapter 7</button>
             <button class="menu-btn" onclick="initGame(8)">📒 Chapter 8</button>
             <button class="menu-btn" onclick="initGame(9)">📔 Chapter 9</button>
-            <button class="menu-btn mixed" onclick="initGame(10)">🎲 Karışık Çöz (Tümü)</button>
+            <button class="menu-btn" onclick="initGame(10)">📝 Chapter 10</button>
+            <button class="menu-btn mixed" onclick="initGame(11)">🎲 Karışık Çöz (Tümü)</button>
         </div>
 
         <!-- QUIZ EKRANI -->
@@ -398,8 +421,8 @@
         <ul>
             <li>Yukarıdaki menüden çözmek istediğiniz bölümü veya karışık modu seçin.</li>
             <li><strong>Sorular her zaman İngilizce ➔ Türkçe yönünde sorulur.</strong></li>
+            <li>Aynı İngilizce kelimenin birden fazla anlamı varsa <strong>şıkların içinde birleştirilerek</strong> tam haliyle gösterilir.</li>
             <li>Şıkları tıklayarak veya klavyeden <span class="key-badge">1</span>, <span class="key-badge">2</span>, <span class="key-badge">3</span>, <span class="key-badge">4</span> tuşlarıyla seçebilirsiniz.</li>
-            <li>Sonraki soruya geçmek için <span class="key-badge">Enter</span> tuşunu kullanın.</li>
         </ul>
     </div>
 
@@ -1264,7 +1287,7 @@ transact (v) / iş bitirmek
 transaction (n) / iş, muamele
 `;
 
-        // CHAPTER 9 (YENİ EKLENEN LİSTE)
+        // CHAPTER 9
         const rawCh9 = `
 adhere (v) / sıkı sıkı yapışmak, bağlı kalmak
 adhesive (n) / yapıştırıcı
@@ -1351,7 +1374,62 @@ utterly (adv) / tamamen, tümüyle
 utter (v) / dile getirmek, söylemek
 `;
 
-        // YENİ AKILLI AYRIŞTIRICI (PARSER)
+        // CHAPTER 10 (YENİ EKLENEN LİSTE)
+        const rawCh10 = `
+ambiguous (adj) / fazla anlam taşıyan, belirsiz
+ambiguity (n) / belirsizlik, kafa karışıklığı 
+amorphous (adj) / şekilsiz, biçimsiz
+asset (n) / kıymetli şey, değerli nitelik, mal
+averse (adj) / isteksiz, karşı
+complement (v) / birbirini tamamlamak, eşleşmek
+complementary (adj) / tamamlayıcı, ilave
+condense (v) / azaltmak, özetlemek
+condense (v) / koyulaştırmak, yoğunlaştırmak 
+confine (v) / sınırlamak, kısıtlamak
+construe (v) / yorumlamak, manalandırmak
+construction (n) / yorumlama
+displace (v) / yerinden çıkarmak, yerini değiştirmek 
+diverge (v) / ayrılmak, birbirinden uzaklaşmak
+drastic (adj) / ciddi, acil
+efficient (adj) / verimli, etkili
+enumerate (v) / birer birer saymak, saymak
+evaporate (v) / buharlaşmak, buharlaştırmak
+evoke (v) / aklına getirmek, çağrıştırmak
+exhaust (v) / yormak 
+exhausted (adj) / yorgun, bitkin
+faction (n) / grup, hizip
+frontier (n) / sınır, hudut bölgesi
+fund (n) / fon
+fund (v) / para ödemek
+illuminate (v) / aydınlatmak
+indigenous (adj) / yerli, o yere özgü
+innate (adj) / doğuştan gelen
+integer (n) / tam sayı
+intrinsic (adj) / asıl, esas
+liberate (v) / serbest bırakmak
+margin (n) / kenar
+marginal (adj) / çok az, önemsiz
+matrix (n) / ana dayanak, rahim
+odd (adj) / tuhaf
+oddly enough / tuhaftır ki
+orbit (n) / yörünge
+orbit (v) / etrafında bir yörüngede dönmek
+residue (n) / artık, tortu
+reverberate (v) / yankı yapmak
+rural (adj) / kırsal
+stationary (adj) / hareketsiz, sabit, durağan
+subdivide (v) / alt bölümlere ayırmak
+subdivision(n) / alt bölüm
+suspend (v) / durdurmak, askıya almak
+suspend (v) / asmak
+unduly (adv) / gereksiz yere
+velocity (n) / hız
+vibrate (v) / titremek, titretmek
+vibration (n) / titreşim
+violate (v) / ihlal etmek
+`;
+
+        // GELİŞTİRİLMİŞ AKILLI AYRIŞTIRICI (PARSER)
         function parseWords(text) {
             const lines = text.split('\n');
             const uniqueMap = new Map();
@@ -1378,7 +1456,12 @@ utter (v) / dile getirmek, söylemek
                     tr = tr.replace(/^\/\s*/, '');
                     
                     if (en && tr) {
-                        uniqueMap.set(en, { en: en, tr: tr });
+                        if (uniqueMap.has(en)) {
+                            // Eğer kelime zaten varsa, yeni anlamı eskisiyle birleştir!
+                            uniqueMap.get(en).tr += " / " + tr;
+                        } else {
+                            uniqueMap.set(en, { en: en, tr: tr });
+                        }
                     }
                 }
             });
@@ -1396,10 +1479,11 @@ utter (v) / dile getirmek, söylemek
         const listCh7 = parseWords(rawCh7);
         const listCh8 = parseWords(rawCh8);
         const listCh9 = parseWords(rawCh9);
+        const listCh10 = parseWords(rawCh10);
         
         const listMixed = [
-            ...listCh1, ...listCh2, ...listCh3, ...listCh4, 
-            ...listCh5, ...listCh6, ...listCh7, ...listCh8, ...listCh9
+            ...listCh1, ...listCh2, ...listCh3, ...listCh4, ...listCh5, 
+            ...listCh6, ...listCh7, ...listCh8, ...listCh9, ...listCh10
         ];
 
         // Global Değişkenler
@@ -1437,7 +1521,7 @@ utter (v) / dile getirmek, söylemek
         }
 
         function showMenu() {
-            menuScreen.style.display = 'grid'; // Grid olarak ayarlamıştık CSS'te
+            menuScreen.style.display = 'grid'; 
             quizScreen.style.display = 'none';
             resultScreen.style.display = 'none';
             infoPanel.style.display = 'block';
@@ -1476,11 +1560,14 @@ utter (v) / dile getirmek, söylemek
                 selectedList = listCh9;
                 modeLabel.textContent = "Bölüm: Chapter 9";
             } else if (mode === 10) {
+                selectedList = listCh10;
+                modeLabel.textContent = "Bölüm: Chapter 10";
+            } else if (mode === 11) {
                 selectedList = listMixed;
                 modeLabel.textContent = "Bölüm: Karışık (Tümü)";
             }
 
-            globalDistractorPool = listMixed; // Yanlış şıklar her zaman karışık havuzdan gelsin
+            globalDistractorPool = listMixed; // Yanlış şıklar her zaman tüm havuzdan gelsin
             startQuiz(selectedList);
         }
 
