@@ -45,7 +45,7 @@
             border-radius: 16px;
             padding: 24px;
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         header {
@@ -80,18 +80,13 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            padding: 10px 5px 10px 0;
-            max-height: 60vh;
-            overflow-y: auto; /* Çok buton olunca taşmaması için eklendi */
+            padding: 5px;
+            max-height: 65vh;
+            overflow-y: auto;
         }
-
-        .menu-box::-webkit-scrollbar {
-            width: 6px;
-        }
-        .menu-box::-webkit-scrollbar-thumb {
-            background-color: var(--border-color);
-            border-radius: 10px;
-        }
+        
+        .menu-box::-webkit-scrollbar { width: 6px; }
+        .menu-box::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 10px; }
 
         .menu-btn {
             background-color: var(--primary);
@@ -106,7 +101,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
         }
 
         .menu-btn:hover {
@@ -117,7 +111,7 @@
         .menu-btn.mixed {
             grid-column: span 2;
             background: linear-gradient(135deg, #8b5cf6, #3b82f6);
-            margin-top: 8px;
+            margin-top: 4px;
             font-size: 1.15rem;
             padding: 18px;
         }
@@ -185,13 +179,12 @@
         }
 
         .question-text {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 24px;
             line-height: 1.4;
             color: var(--text-main);
-            text-align: center;
-            word-break: break-word; /* Uzun kelimelerin taşmasını engeller */
+            word-break: break-word; 
         }
 
         .options-grid {
@@ -201,29 +194,21 @@
             margin-bottom: 24px;
         }
 
+        /* YENİ NESİL ŞIK TASARIMI (Taşmaları tamamen önler) */
         .option-btn {
             width: 100%;
             background-color: rgba(30, 41, 59, 0.7);
             border: 2px solid var(--border-color);
             border-radius: 10px;
             padding: 14px 16px;
-            text-align: left;
             color: var(--text-main);
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
-            align-items: center;
-            position: relative;
+            align-items: flex-start; /* Numara en üstte kalır */
+            gap: 12px; /* Numara ile metin arası boşluk */
             outline: none;
-            /* Uzun Türkçe anlamların alt satıra geçmesi için düzenlendi */
-            white-space: normal;
-            word-break: break-word;
-            line-height: 1.4;
-        }
-
-        .option-text-val {
-            flex: 1; /* Uzun metinlerin kalan boşluğu doldurmasını sağlar */
         }
 
         .option-btn:hover:not(:disabled) {
@@ -237,23 +222,31 @@
         .option-key {
             background-color: var(--border-color);
             color: var(--text-muted);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 700;
             padding: 4px 8px;
             border-radius: 6px;
-            margin-right: 12px;
-            min-width: 28px;
+            min-width: 32px;
             text-align: center;
-            display: inline-block;
+            flex-shrink: 0; /* Numara kutusunun küçülmesini engeller */
+            margin-top: 2px;
+        }
+        
+        .option-text-val {
+            flex: 1; /* Metin kalan tüm alanı kaplar */
+            text-align: left;
+            line-height: 1.5;
+            word-break: break-word;
+            white-space: normal; /* Uzun metnin alt satıra geçmesini sağlar */
         }
 
         .option-btn.correct {
             background-color: rgba(16, 185, 129, 0.15) !important;
             border-color: var(--success) !important;
             color: #10b981 !important;
-            font-weight: 600;
         }
         .option-btn.correct .option-key { background-color: var(--success); color: white; }
+        .option-btn.correct .option-text-val { font-weight: 600; }
 
         .option-btn.incorrect {
             background-color: rgba(239, 68, 68, 0.15) !important;
@@ -290,7 +283,7 @@
             color: white;
             border: none;
             border-radius: 8px;
-            padding: 10px 20px;
+            padding: 12px 24px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
@@ -1374,7 +1367,7 @@ utterly (adv) / tamamen, tümüyle
 utter (v) / dile getirmek, söylemek
 `;
 
-        // CHAPTER 10 (YENİ EKLENEN LİSTE)
+        // CHAPTER 10 (ÖNCEKİ + YENİ EKLENEN LİSTE BİRLEŞİK)
         const rawCh10 = `
 ambiguous (adj) / fazla anlam taşıyan, belirsiz
 ambiguity (n) / belirsizlik, kafa karışıklığı 
@@ -1427,24 +1420,105 @@ velocity (n) / hız
 vibrate (v) / titremek, titretmek
 vibration (n) / titreşim
 violate (v) / ihlal etmek
+access (n) / giriş, erişim
+access (v) / girmek
+accessible (adj) / girilebilir, ulaşılabilir
+angular (adj) / köşeli, şekli belli, kemikli
+anomaly (n) / sapma, farklılık
+append (v) / ilave etmek, eklemek
+appendix (n) / apandist
+ascribe to (v) / atfetmek
+aspire (v) / arzu etmek
+assent (n,v) / onay, rıza, onaylamak, razı olmak
+assimilate (v) / asimile etmek, kendine uydurmak
+auspices (n) / kontrol, teşvik, rehberlik
+coefficient (n) / kat sayı
+cogent (adj) / inandırıcı, ikna edici
+comprise (v) / kapsamak, içermek, -dan oluşmak
+compromise (n) / uzlaşma, anlaşma, uzlaşmaya varma
+compulsion (n) / dayanılmaz istek, zorlama
+compulsive (adj) / zorlayıcı
+compulsory (adj) / zorunlu, mecburi
+converge (v) / bir noktaya yönelmek, birleşmek
+deflect (v) / yönünü değiştirmek
+deliberate (adj) / kasıtlı, amaçlı, temkinli, dikkatli
+deliberatly (adv) / kasten, amaçlı olarak
+dispense (v) / dağıtmak, vermek
+dispenser (n) / dağıtıcı
+elevate (v) / yükseltmek, terfi ettirmek
+elevated / yükseltilmiş, yüksek
+elicit (v) / edinmek, sağlamak, ortaya koymak
+eloquent (v) / etkili ve güzel söz söylemek 
+emoncipate (v) / özgür, serbest 
+embrace (v) / kucaklamak
+embrace (v) / içermek
+emerge (v) / ortaya çıkmak, meydana gelmek
+emergency (n) / birden ortaya çıkan acil ciddi durum
+enchance (v) / arttırmak, yükseltmek
+enrich (v) / zenginleştirmek
+episode (n) / içinde tek bir olayın olduğu bölüm 
+equidistant (adj) / eşit mesafede olan
+exponent (n) / savunucu, taraftar
+facilitate (v) / kolaylaştırmak
+fluent (adj) / akıcı konuşan
+inconsistent (adj) / tutarsız
+inconsistency (n) / tutarsızlık
+ingenious (adj) / usta, dahi
+inherent (adj) / kalıtımsal, esas, doğuştan gelen
+inherently (adv) / kalıtımsal olarak, temelde, esasen
+interellate (v) / birbiri ile ilişkili olmak
+interrelated (adj) / birbiri ile ilişkili
+interview (v) / mülakat yapmak, görüşmek
+interview (v) / yüzyüze görüşmek, sorgulamak
+intimacy (n) / dost, samimi kişi
+intimacy (n) / samimiyet, dostluk
+maternal (adj) / anneliğe özgü, annelik ile ilgili
+null and void (adj) / hükümsüz, geçersiz
+nullify (v) / geçersiz kılmak
+option (n) / seçenek, tercih
+optional / tercihli, tercihe bağlı
+outcome (n) / sonuç, netice 
+perpetual (adj) / sürekli, daimi
+perpetuate (v) / sürdürmek, sürekli hale getirmek 
+priority (n) / öncelik
+procure (v) / elde etmek, edinmek 
+prohibit (v) / yasaklamak
+province (n) / il, vilayet, eyalet
+purport (v) / iddia etmek, gibi görünmek 
+purport (n) / genel anlam, öz
+quote (v) / söylediğini tamamlamak, alıntı yapmak
+quotation (n) / alıntı
+quote (v) / fiyat vermek
+recur (v) / nüksetmek, tekrarlamak
+remove (v) / çıkarmak, kaldırmak
+render (v) / bir duruma getirmek, bir hale sokmak
+render (v) / dönüştürmek, çevirmek 
+repress (v) / baskı altında tutmak, baskılamak
+resident (n) / sakin bir yerde oturan kimse
+rigour (n) / katılık, sertlik 
+rigorous (adj) / ciddi, katı
+rigour (n) / ihtimam, dikkat, özen
+saturate (v) / doyurmak
+saturated (adj) / doymuş, doyurulmuş
+surplus (n) / üretim fazlası, fazla
+tangible (adj) / elle tutulur, somut
+tolerate (v) / hoş görmek, tahammül etmek
+vague (adj) / belirsiz, muğlak
 `;
 
         // GELİŞTİRİLMİŞ AKILLI AYRIŞTIRICI (PARSER)
+        // Aynı İngilizce kelimeye ait Türkçe anlamları SİLMEZ, BİRLEŞTİRİR.
         function parseWords(text) {
             const lines = text.split('\n');
             const uniqueMap = new Map();
 
             lines.forEach(line => {
-                // "- [ ] " veya "- " gibi gereksiz liste işaretlerini başından siler
                 let clean = line.replace(/^[\-\[\]\s]+/, '').trim();
                 
-                // Eğer satırda hiç "/" yoksa atla
                 if (!clean || !clean.includes('/')) return;
 
-                // Bölmek için en mantıklı yer " / " işaretidir
                 let splitIndex = clean.indexOf(' / ');
                 if (splitIndex === -1) {
-                    // Bulamazsa sadece "/" olan ilk yeri bul
                     splitIndex = clean.indexOf('/');
                 }
 
@@ -1452,12 +1526,11 @@ violate (v) / ihlal etmek
                     let en = clean.substring(0, splitIndex).trim();
                     let tr = clean.substring(splitIndex + 1).trim();
                     
-                    // Türkçe kısmında başa takılan gereksiz '/' işaretlerini temizle
                     tr = tr.replace(/^\/\s*/, '');
                     
                     if (en && tr) {
                         if (uniqueMap.has(en)) {
-                            // Eğer kelime zaten varsa, yeni anlamı eskisiyle birleştir!
+                            // Aynı kelimenin başka anlamı varsa, ekleyerek birleştir!
                             uniqueMap.get(en).tr += " / " + tr;
                         } else {
                             uniqueMap.set(en, { en: en, tr: tr });
@@ -1493,7 +1566,7 @@ violate (v) / ihlal etmek
         let currentQuestion = null; 
         let wrongAnswersPool = [];  
         let isAnswered = false;     
-        let globalDistractorPool = []; // Çeldiricileri tüm kelimelerden almak için
+        let globalDistractorPool = []; 
 
         // DOM Elemanları
         const menuScreen = document.getElementById('menu-screen');
@@ -1528,46 +1601,22 @@ violate (v) / ihlal etmek
             modeLabel.textContent = "Lütfen Bölüm Seçin";
         }
 
-        // Menü butonuna tıklandığında tetiklenir
         function initGame(mode) {
             let selectedList = [];
             
-            if (mode === 1) {
-                selectedList = listCh1;
-                modeLabel.textContent = "Bölüm: Chapter 1";
-            } else if (mode === 2) {
-                selectedList = listCh2;
-                modeLabel.textContent = "Bölüm: Chapter 2";
-            } else if (mode === 3) {
-                selectedList = listCh3;
-                modeLabel.textContent = "Bölüm: Chapter 3";
-            } else if (mode === 4) {
-                selectedList = listCh4;
-                modeLabel.textContent = "Bölüm: Chapter 4";
-            } else if (mode === 5) {
-                selectedList = listCh5;
-                modeLabel.textContent = "Bölüm: Chapter 5";
-            } else if (mode === 6) {
-                selectedList = listCh6;
-                modeLabel.textContent = "Bölüm: Chapter 6";
-            } else if (mode === 7) {
-                selectedList = listCh7;
-                modeLabel.textContent = "Bölüm: Chapter 7";
-            } else if (mode === 8) {
-                selectedList = listCh8;
-                modeLabel.textContent = "Bölüm: Chapter 8";
-            } else if (mode === 9) {
-                selectedList = listCh9;
-                modeLabel.textContent = "Bölüm: Chapter 9";
-            } else if (mode === 10) {
-                selectedList = listCh10;
-                modeLabel.textContent = "Bölüm: Chapter 10";
-            } else if (mode === 11) {
-                selectedList = listMixed;
-                modeLabel.textContent = "Bölüm: Karışık (Tümü)";
-            }
+            if (mode === 1) { selectedList = listCh1; modeLabel.textContent = "Bölüm: Chapter 1"; }
+            else if (mode === 2) { selectedList = listCh2; modeLabel.textContent = "Bölüm: Chapter 2"; }
+            else if (mode === 3) { selectedList = listCh3; modeLabel.textContent = "Bölüm: Chapter 3"; }
+            else if (mode === 4) { selectedList = listCh4; modeLabel.textContent = "Bölüm: Chapter 4"; }
+            else if (mode === 5) { selectedList = listCh5; modeLabel.textContent = "Bölüm: Chapter 5"; }
+            else if (mode === 6) { selectedList = listCh6; modeLabel.textContent = "Bölüm: Chapter 6"; }
+            else if (mode === 7) { selectedList = listCh7; modeLabel.textContent = "Bölüm: Chapter 7"; }
+            else if (mode === 8) { selectedList = listCh8; modeLabel.textContent = "Bölüm: Chapter 8"; }
+            else if (mode === 9) { selectedList = listCh9; modeLabel.textContent = "Bölüm: Chapter 9"; }
+            else if (mode === 10) { selectedList = listCh10; modeLabel.textContent = "Bölüm: Chapter 10"; }
+            else if (mode === 11) { selectedList = listMixed; modeLabel.textContent = "Bölüm: Karışık (Tümü)"; }
 
-            globalDistractorPool = listMixed; // Yanlış şıklar her zaman tüm havuzdan gelsin
+            globalDistractorPool = listMixed; // Çeldiriciler daima karışık havuzdan seçilsin
             startQuiz(selectedList);
         }
 
@@ -1579,7 +1628,7 @@ violate (v) / ihlal etmek
                 modeLabel.textContent = "Mod: Yanlışları Tekrar Çöz";
             } else {
                 activeList = modeData;
-                wrongAnswersPool = []; // Yeni normal oyunda hata havuzunu sıfırla
+                wrongAnswersPool = []; 
             }
 
             quizPool = shuffleArray(activeList);
@@ -1613,7 +1662,6 @@ violate (v) / ihlal etmek
             let questionString = targetWord.en;
             let correctValue = targetWord.tr;
 
-            // Çeldiricileri Global Listeden Al
             const filteredDistractors = globalDistractorPool.filter(w => {
                 return w.tr !== correctValue;
             });
@@ -1661,7 +1709,6 @@ violate (v) / ihlal etmek
                     buttons[correctOptionIndex].classList.add('correct');
                 }
                 
-                // Yanlış havuza ekle
                 if (!wrongAnswersPool.some(w => w.en === currentQuestion.wordObj.en)) {
                     wrongAnswersPool.push(currentQuestion.wordObj);
                 }
