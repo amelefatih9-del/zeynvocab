@@ -101,6 +101,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 8px;
         }
 
         .menu-btn:hover {
@@ -185,6 +186,7 @@
             line-height: 1.4;
             color: var(--text-main);
             word-break: break-word; 
+            text-align: center;
         }
 
         .options-grid {
@@ -353,7 +355,8 @@
             <button class="menu-btn" onclick="initGame(8)">📒 Chapter 8</button>
             <button class="menu-btn" onclick="initGame(9)">📔 Chapter 9</button>
             <button class="menu-btn" onclick="initGame(10)">📝 Chapter 10</button>
-            <button class="menu-btn mixed" onclick="initGame(11)">🎲 Karışık Çöz (Tümü)</button>
+            <button class="menu-btn" onclick="initGame(11)">📖 Chapter 11</button>
+            <button class="menu-btn mixed" onclick="initGame(12)">🎲 Karışık Çöz (Tümü)</button>
         </div>
 
         <!-- QUIZ EKRANI -->
@@ -1367,7 +1370,7 @@ utterly (adv) / tamamen, tümüyle
 utter (v) / dile getirmek, söylemek
 `;
 
-        // CHAPTER 10 (ÖNCEKİ + YENİ EKLENEN LİSTE BİRLEŞİK)
+        // CHAPTER 10 (ÖNCEKİ LİSTE)
         const rawCh10 = `
 ambiguous (adj) / fazla anlam taşıyan, belirsiz
 ambiguity (n) / belirsizlik, kafa karışıklığı 
@@ -1420,6 +1423,10 @@ velocity (n) / hız
 vibrate (v) / titremek, titretmek
 vibration (n) / titreşim
 violate (v) / ihlal etmek
+`;
+
+        // CHAPTER 11 (YENİ EKLENEN LİSTE)
+        const rawCh11 = `
 access (n) / giriş, erişim
 access (v) / girmek
 accessible (adj) / girilebilir, ulaşılabilir
@@ -1553,10 +1560,11 @@ vague (adj) / belirsiz, muğlak
         const listCh8 = parseWords(rawCh8);
         const listCh9 = parseWords(rawCh9);
         const listCh10 = parseWords(rawCh10);
+        const listCh11 = parseWords(rawCh11);
         
         const listMixed = [
             ...listCh1, ...listCh2, ...listCh3, ...listCh4, ...listCh5, 
-            ...listCh6, ...listCh7, ...listCh8, ...listCh9, ...listCh10
+            ...listCh6, ...listCh7, ...listCh8, ...listCh9, ...listCh10, ...listCh11
         ];
 
         // Global Değişkenler
@@ -1614,7 +1622,8 @@ vague (adj) / belirsiz, muğlak
             else if (mode === 8) { selectedList = listCh8; modeLabel.textContent = "Bölüm: Chapter 8"; }
             else if (mode === 9) { selectedList = listCh9; modeLabel.textContent = "Bölüm: Chapter 9"; }
             else if (mode === 10) { selectedList = listCh10; modeLabel.textContent = "Bölüm: Chapter 10"; }
-            else if (mode === 11) { selectedList = listMixed; modeLabel.textContent = "Bölüm: Karışık (Tümü)"; }
+            else if (mode === 11) { selectedList = listCh11; modeLabel.textContent = "Bölüm: Chapter 11"; }
+            else if (mode === 12) { selectedList = listMixed; modeLabel.textContent = "Bölüm: Karışık (Tümü)"; }
 
             globalDistractorPool = listMixed; // Çeldiriciler daima karışık havuzdan seçilsin
             startQuiz(selectedList);
